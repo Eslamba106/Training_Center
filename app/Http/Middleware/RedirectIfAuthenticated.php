@@ -23,11 +23,15 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check()) {
                 //write code for redirect both for admin or front in case login alerady done
                 if ($request->is('admin') || $request->is('admin/*')) {
-                //redirect Backend
+                //redirect Backend student
                     return redirect(RouteServiceProvider::ADMIN);
 
-                } else {
-                    return redirect(RouteServiceProvider::HOME);
+                } 
+                elseif($request->is('student') || $request->is('student/*')) {
+                    return redirect(RouteServiceProvider::student);
+                }
+                elseif($request->is('moderator') || $request->is('moderator/*')) {
+                    return redirect(RouteServiceProvider::Moderator);
                 }
             }
         }

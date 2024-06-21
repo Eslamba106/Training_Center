@@ -20,6 +20,7 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/dashboard';
     public const ADMIN = '/admin/dashboard';
     public const Moderator = '/moderator/dashboard';
+    public const student = '/student/dashboard';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -39,6 +40,9 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->prefix('admin')
                 ->group(base_path('routes/admin.php'));
+            Route::middleware('web')
+                ->prefix('student')
+                ->group(base_path('routes/student.php'));
         });
     }
 

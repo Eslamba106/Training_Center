@@ -145,8 +145,12 @@
                     {{-- <td>{{ $item->period }}</td> --}}
                     <td>{{ $item->created_at->shortAbsoluteDiffForHumans() }}</td>
                     <td>
-                        <a href="{{ route('admin.dashboard') }}" id="add_students" value="{{ $item->id }}"
+                        <a href="{{ route('admin.add_students' , $item->id ) }}" id="add_students" value="{{ $item->id }}"
                             class="btn btn-sm btn-outline-primary" data-toggle="modal">اضافة طلاب</a>
+                    </td>
+                    <td>
+                        <a href="{{ route('admin.add_students.show' , $item->id ) }}" id="add_students" value="{{ $item->id }}"
+                            class="btn btn-sm btn-outline-primary" data-toggle="modal">عرض الطلاب</a>
                     </td>
                     <td>
                         <a href="" id="edit_section_item" value="{{ $item->id }}"
@@ -169,6 +173,16 @@
     @endif --}}
         </tbody>
     </table>
+
+    @if(Session::has('success'))
+    <script>
+        swal("Message" ,  "{{ Session::get('success') }}" , 'sucsess', {
+            button: true,
+            button: "Ok"
+
+        })
+    </script>
+    @endif
 @endsection
 
 @section('js')

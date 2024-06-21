@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\user\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,12 +12,12 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dash', function () {
-    return view('layouts.dashboard.dashboard');
-});
+// Route::get('/user/login', [LoginController::class , 'index'])->name('user.login.show');
+// Route::post('/login', [LoginController::class, 'login'])->name('user.login');
+// Route::get('/logout', [LoginController::class, 'logout'])->name('user.logout')->middleware('auth:user');

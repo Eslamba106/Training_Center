@@ -35,7 +35,7 @@
                         <div class="login-fancy pb-40 clearfix">
                             <h3 style="font-family: 'Cairo', sans-serif" class="mb-30">حدد طريقة الدخول</h3>
                             <div class="form-inline">
-                                <a class="btn btn-default col-lg-4" title="طالب" > 
+                                <a class="btn btn-default col-lg-4" title="طالب" href="{{ route('student.login.show') }}"> 
                                     {{-- href="{{route('login.show','student')}}"> --}}
                                     <img alt="user-img" width="100px;" src="{{URL::asset('images/student.png')}}">
                                 </a>
