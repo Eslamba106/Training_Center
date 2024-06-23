@@ -38,6 +38,7 @@
                             <h1 class="invoice-title">قائمة حضور وغياب قسم {{ $section->name }}</h1>
                             <div class="billed-from">
                                 <h6>{{ $settings->web_name ?? "EslamSoft" }}</h6>
+                                <h6>المشرف علي القسم : {{ auth()->guard('moderator')->user()->name ?? "EslamSoft" }}</h6>
                                 <p></p>
                             </div><!-- billed-from -->
                         </div><!-- invoice-header -->
@@ -53,7 +54,7 @@
                                         <th class="wd-40p">الاسم</th>
                                         <th class="tx-center">البريد الالكتروني</th>
                                         <th class="tx-right">الحالة</th>
-                                        {{--  <th class="tx-right">الاجمالي</th> --}}
+                                         <th class="tx-right">ملاحظات</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,10 +66,13 @@
                                             @foreach ($attendence_tables as $item)
                                             @if ($item->student_id == $student->id  && $item->attendence_status == 1)
                                                 <td class="tx-center">حضور</td>
-                                            @elseif ($item->student_id == $student->id  && $item->attendence_status == 0)
+                                            @elseif ($item->student_id == $student->id  && $item->attendence_status == 0 && $item->excused ==0)
                                            
                                             <td class="tx-center">غياب</td>
-
+                                            <td class="tx-center">بدون عذر</td>
+                                            @elseif ($item->student_id == $student->id  && $item->attendence_status == 0 && $item->excused ==1)
+                                            <td class="tx-center">غياب</td>
+                                            <td class="tx-center">اجازة</td>
                                             @endif
                                             @endforeach
                                         </tr>

@@ -37,6 +37,15 @@
                                 <label for="">العنوان</label>
                                 <input class="form-control" type="text" name="name">
                             </div>
+                            <div class="form-group">
+                                <label for="">القسم</label>
+                                <select class="form-control"  name="section_id" id="">
+                                    @foreach ($sections as $item)
+                                        
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             {{-- <div class="form-group">
                                 <label for="">مدة الدورة</label>
@@ -78,11 +87,16 @@
                                 <input type="hidden" name="id" id="edit_rate_id" value="">
                                 <input class="form-control" id="edit_name" type="text" name="name">
                             </div>
+                            <div class="form-group">
+                                <label for="">القسم</label>
+                                <select class="form-control"  name="section_id" id="edit_section_id_rate" >
+                                    @foreach ($sections as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
 
-                            {{-- <div class="form-group">
-                                <label for="">مدة الدورة</label>
-                                <input class="form-control" id="edit_period" type="text" name="period">
-                            </div> --}}
+                           
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
@@ -132,7 +146,7 @@
         <thead>
             <tr>
                 <th>العنوان</th>
-                {{-- <th>مدة الدورة</th> --}}
+                <th>القسم</th>
                 <th>اضيفت في</th>
                 <th>العمليات</th>
             </tr>
@@ -142,7 +156,7 @@
             @forelse ($rate as $item)
                 <tr>
                     <td>{{ $item->title }}</td>
-                    {{-- <td>{{ $item->period }}</td> --}}
+                    <td>{{ $item->section->name }}</td>
                     <td>{{ $item->created_at->shortAbsoluteDiffForHumans() }}</td>
                     {{-- <td>
                         <a href="{{ route('admin.add_students' , $item->id ) }}" id="add_students" value="{{ $item->id }}"
@@ -260,6 +274,7 @@
                     } else {
                         $('#edit_rate_id').val(sect_id)
                         $('#edit_name').val(response.rate.title)
+                        $('#edit_section_id_rate').val(response.rate.section_id)
 
                     }
                 },
@@ -276,6 +291,7 @@
             var sect_id = $('#edit_rate_id').val();
             var data = {
                 'name': $('#edit_name').val(),
+                'section_id': $('#edit_section_id_rate').val(),
             };
 
             $.ajax({

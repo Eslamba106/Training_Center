@@ -9,5 +9,10 @@ class Rate extends Model
 {
     use HasFactory; 
 
-    public $fillable = ['title'];
+    public $fillable = ['title' , 'section_id'];
+
+    public function section()
+    {
+        return $this->belongsTo(Section::class , 'section_id');
+    }
 }

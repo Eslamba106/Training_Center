@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RateController;
-use App\Http\Controllers\StudentRateController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\GraduatedController;
 use App\Http\Controllers\Admin\ModeratorController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AttendanceController;
+use App\Http\Controllers\Admin\StudentRateController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\SectionStudentController;
 
@@ -89,10 +90,18 @@ Route::post('rate/student_rate/store', [StudentRateController::class, 'store'])-
 Route::get('/attendance/{id}' , [AttendanceController::class , 'index'])->name('admin.attendance.index');
 Route::post('/attendance/store' , [AttendanceController::class , 'store'])->name('admin.attendance.store');
 Route::get('/attendance/print/{id}' , [ AttendanceController::class , 'print'])->name('admin.attendance.print');
+Route::get('/attendance/report/{id}' , [ AttendanceController::class , 'report'])->name('admin.attendance.report');
+Route::post('search_attendance' , [ AttendanceController::class , 'Search_invoices']);
 
-// Route::resource('attendance', AttendanceController::class);
+################################## Geraduated From Section ########################
 
-// Route::post('attendance','StudentController@attendance')->name('attendance');
-// Route::post('edit_attendance','StudentController@editAttendance')->name('attendance.edit');
-// Route::get('attendance_report','StudentController@attendanceReport')->name('attendance.report');
-// Route::post('attendance_report','StudentController@attendanceSearch')->name('attendance.search');
+Route::get('/section/graduated/{id}', [GraduatedController::class ,'index'])->name('admin.graduated');
+
+
+
+
+
+#################################################################################### 
+// Route::get('/attendance/Search_customers_index' , [ AttendanceController::class , 'Search_customers_index'])->name('Search_customers_index');
+// Route::post('/attendance/Search_customers' , [ AttendanceController::class , 'Search_customers'])->name('Search_customers');
+

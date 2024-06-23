@@ -14,30 +14,29 @@ class AttendanceController extends Controller
 {
     public function index($id)
     {
-        // $Grades = Grade::with(['Sections'])->get();
-        $section = Section::where('id' , $id)->first();
+        $section = Section::where('id', $id)->first();
         $teachers = Moderator::all();
 
         $section_students = SectionStudent::where('section_id', $section->id)->get();
         foreach ($section_students as $sectionstudent) {
             $student_ids[] = $sectionstudent->student_id;
         }
-        
+
         if ($student_ids != null) {
 
             $students = Student::whereIn('id', $student_ids)->get();
-        }else{
+        } else {
             $students = [];
-            
+
         }
         // $students = Student::all();
-        return view('admin.attendance.index',compact('section','teachers' , 'students'));
+        return view('admin.attendance.index', compact('section', 'teachers', 'students'));
     }
 
     public function show($id)
     {
-        $students = Student::with('attendance')->where('section_id',$id)->get();
-        return view('pages.Attendance.index',compact('students'));
+        $students = Student::with('attendance')->where('section_id', $id)->get();
+        return view('admin.attendance.index', compact('students'));
     }
 
     public function store(Request $request)
@@ -47,55 +46,90 @@ class AttendanceController extends Controller
 
             foreach ($request->attendences as $studentid => $attendence) {
 
-                if( $attendence == 'presence' ) {
+                if ($attendence == 'presence') {
                     $attendence_status = true;
-                } else if( $attendence == 'absent' ){
+                } else if ($attendence == 'absent') {
                     $attendence_status = false;
                 }
-                // if( $attendence == 'presence' ) {
-                //     $attendence_status = true;
-                // } else if( $attendence == 'absent' ){
-                //     $attendence_status = false;
-                // }
-
 
                 Attendance::create([
-                    'student_id'=> $studentid,
-                    'section_id'=> $request->section_id,
-                    'moderators_id'=> 1,
-                    'attendence_date'=> date('Y-m-d'),
-                    'attendence_status'=> $attendence_status,
-                    'excused'=> $request->excused[$studentid] ?? null
+                    'student_id' => $studentid,
+                    'section_id' => $request->section_id,
+                    'moderators_id' => 1,
+                    'attendence_date' => date('Y-m-d'),
+                    'attendence_status' => $attendence_status,
+                    'excused' => $request->excused[$studentid] ?? null,
                 ]);
 
             }
 
-
             return redirect()->back();
 
-        }
-
-        catch (\Exception $e){
+        } catch (\Exception $e) {
             return redirect()->back()->withErrors(['error' => $e->getMessage()]);
         }
     }
 
-    public function print($id){
+    public function print($id)
+    {
 
-        
-        $attendence_tables = Attendance::where('section_id' , $id)->where('attendence_date', date('Y-m-d'))->get();
-        $section = Section::where('id' , $id)->first();
+        $attendence_tables = Attendance::where('section_id', $id)->where('attendence_date', date('Y-m-d'))->get();
+        $section = Section::where('id', $id)->first();
         $attendence_tables->toArray();
 
-        foreach ($attendence_tables as $attendence_table){
-            $students[] = Student::where('id' , $attendence_table->student_id)->first();
+        foreach ($attendence_tables as $attendence_table) {
+            $students[] = Student::where('id', $attendence_table->student_id)->first();
         }
-                // dd($attendence_tables);
-        return view('admin.print.attendance_table' , compact(['attendence_tables' , 'students' , 'section']));
+        return view('admin.print.attendance_table', compact(['attendence_tables', 'students', 'section']));
     }
 
-    public function destroy($request)
+    public function report($id)
     {
-        // TODO: Implement destroy() method.
+        $section = Section::where('id', $id)->first();
+        $section_students = SectionStudent::where('section_id', $section->id)->get();
+        foreach ($section_students as $sectionstudent) {
+            $student_ids[] = $sectionstudent->student_id;
+        }
+
+        if ($student_ids != null) {
+
+            $students = Student::whereIn('id', $student_ids)->get();
+        } else {
+            $students = [];
+
+        }
+
+        return view('admin.attendance.report', compact('section_students', 'section'));
     }
+
+    public function Search_invoices(Request $request)
+    {
+
+        $section = Section::where('id', $request->section_id)->first();
+        if ($request->type && $request->start_at == '' && $request->end_at == '') {
+            $student_attendance = Attendance::where('section_id', $request->section_id)->get();
+            return view('admin.attendance.report', compact('type'))->with('student_attendance', $student_attendance);
+
+        } else {
+            if ($request->type == 'all') {
+                $start_at = date($request->start_at);
+                $end_at = date($request->end_at);
+                $type = 'الكل في هذة الفترة';
+                $student_attendance = Attendance::where('section_id', $request->section_id)->whereBetween('attendence_date', [$start_at, $end_at])->get();
+                return view('admin.attendance.report', compact(['type', 'start_at', 'end_at']))->with('student_attendance', $student_attendance);
+            } else {
+                $start_at = date($request->start_at);
+                $end_at = date($request->end_at);
+                $type = $request->type;
+                $student_attendance = Attendance::where('section_id', $request->section_id)->whereBetween('attendence_date', [$start_at, $end_at])->get();
+                return view('admin.attendance.report', compact(['type', 'start_at', 'end_at', 'section']))->with('student_attendance', $student_attendance);
+            }
+
+        }
+        // }
+
+        // in case search by invoice number
+        return "Eska";
+    }
+
 }

@@ -5,38 +5,45 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Settings;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class SettingsController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $settings = Settings::first();
-        return view('admin.settings.index' , compact('settings'));
+        return view('admin.settings.index', compact('settings'));
     }
 
     public function edit()
     {
-    $settings = Settings::first();
-    return view('admin.settings.edit' , compact('settings'));
-}
-    public function update(Request $request){
-        // $request->validate([
-        //     'facebook' => "required|string|max:255",
-        //     "x" => "required|string|max:255",
-        //     "linked_in" => "required",
-        //     "instagram" => "required",
-        //     "phone" => "required",
-        //     "email" => "required",
-        // ]);
-        // dd($request->all());
+        $settings = Settings::first();
+        return view('admin.settings.edit', compact('settings'));
+    }
+    public function update(Request $request)
+    {
+
         $setting = Settings::first();
+        $old_image = $setting->logo;
+        $data = $request->except('logo');
+        $new_image = $this->uploadImage($request);
 
+        if ($new_image) {
+            $data['image'] = $new_image;
+        }
         // dd($new_image);
-        $setting->update($request->all());
+        $setting->update([
+            "web_name" => $request->web_name,
+            "logo" => $new_image ?? $old_image,
+        ]);
+        if ($old_image && $new_image) {
+            Storage::disk('public')->delete($old_image);
+        }
 
-        return redirect()->route('admin.settings');
+        return redirect()->route('admin.settings')->with('success','تم التعديل');
     }
 
-    protected function uploadImage(Request $request)
+    public function uploadImage(Request $request)
     {
         if (!$request->hasFile('logo')) {
             return;

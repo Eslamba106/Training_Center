@@ -40,7 +40,7 @@
                                     <img alt="user-img" width="100px;" src="{{URL::asset('images/student.png')}}">
                                 </a>
                                
-                                <a class="btn btn-default col-lg-4" title="معلم" >
+                                <a href="{{ route('moderator.login.show') }}" class="btn btn-default col-lg-4" title="معلم" >
                                     {{-- </a>href="{{route('login.show','teacher')}}"> --}}
                                     <img alt="user-img" width="100px;" src="{{URL::asset('images/teacher.png')}}">
                                 </a>

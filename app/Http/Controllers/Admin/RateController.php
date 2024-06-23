@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Rate;
+use App\Models\Section;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -11,17 +12,20 @@ class RateController extends Controller
     public function index()
     {
         $rate = Rate::all();
-        return view('admin.rate.index' , compact('rate'));
+        $sections = Section::all();
+        return view('admin.rate.index' , compact(['rate' , 'sections']));
     }
 
     public function store (Request $request){
         
         $request->validate([
             'name' => "required",
+            'section_id' => "required",
         ]);
     
         Rate::create([
             "title" => $request->name,
+            "section_id" => $request->section_id,
         ]);
 
         return redirect()->route('admin.rate');
@@ -30,6 +34,7 @@ class RateController extends Controller
     public function edit($id)
     {
         $rate = Rate::find($id);
+        // $section = Rate::find($id);
         if($rate)
         {
             return response()->json([
@@ -47,10 +52,12 @@ class RateController extends Controller
     public function update(Request $request , $id)
     {
         $rate = Rate::find($id);
+        // dd($request->all());
         if($rate)
         {
             $rate->update([
                 'title' => $request->name,
+                'section_id' => $request->section_id,
             ]);
     
             return response()->json([

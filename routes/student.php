@@ -31,9 +31,9 @@ Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('st
 
 ############################## Section ######################################
 
-Route::get('/section' , [SectionController::class , 'index'])->name('student.section');
+Route::get('/section' , [SectionController::class , 'index'])->name('student.section')->middleware('auth:student');
 
 
 ############################## Attendance ###################################
 
-Route::get('/attendance/{id}' , [AttendanceController::class , 'index'])->name('student.attendance.show');
+Route::get('/attendance/{id}' , [AttendanceController::class , 'index'])->name('student.attendance.show')->middleware('auth:student');

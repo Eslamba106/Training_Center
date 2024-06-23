@@ -50,7 +50,9 @@
 
         <!-- Control Sidebar -->
     </div>
+
     @include('layouts.dashboard.footer')
+
 </body>
 
 </html>

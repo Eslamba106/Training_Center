@@ -10,6 +10,8 @@ class SectionController extends Controller
 {
     public function index()
     {
+        // session()->regenerate();
+
         $sections = Section::get();
         return view('admin.section.index' , compact('sections'));
     }
@@ -72,7 +74,7 @@ class SectionController extends Controller
         $id = $request->id;
         $section = Section::findOrFail($id);
         $section->delete();
-        return redirect()->route('admin.section');
+        return redirect()->route('admin.section')->with('danger' , 'تم الحذف');
     }
 
     public function fetchSection(){

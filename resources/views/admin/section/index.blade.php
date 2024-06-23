@@ -144,13 +144,22 @@
                     <td>{{ $item->name }}</td>
                     {{-- <td>{{ $item->period }}</td> --}}
                     <td>{{ $item->created_at->shortAbsoluteDiffForHumans() }}</td>
+
                     <td>
-                        <a href="{{ route('admin.add_students' , $item->id ) }}" id="add_students" value="{{ $item->id }}"
-                            class="btn btn-sm btn-outline-primary" data-toggle="modal">اضافة طلاب</a>
+                        <a href="{{ route('admin.add_students', $item->id) }}" id="add_students"
+                            value="{{ $item->id }}" class="btn btn-sm btn-outline-primary" data-toggle="modal">اضافة
+                            طلاب</a>
                     </td>
                     <td>
-                        <a href="{{ route('admin.add_students.show' , $item->id ) }}" id="add_students" value="{{ $item->id }}"
-                            class="btn btn-sm btn-outline-primary" data-toggle="modal">عرض الطلاب</a>
+                        <a href="{{ route('admin.add_students.show', $item->id) }}" id="add_students"
+                            value="{{ $item->id }}" class="btn btn-sm btn-outline-primary" data-toggle="modal">عرض
+                            الطلاب</a>
+                    </td>
+                    <td>
+                        <a href="{{ route('admin.graduated', $item->id) }}" id="add_students"
+                            value="{{ $item->id }}" class="btn btn-sm btn-outline-primary" data-toggle="modal">
+                            الطلاب المتخرجين
+                            </a>
                     </td>
                     <td>
                         <a href="" id="edit_section_item" value="{{ $item->id }}"
@@ -174,18 +183,43 @@
         </tbody>
     </table>
 
-    @if(Session::has('success'))
+    @if (Session::has('danger'))
     <script>
-        swal("Message" ,  "{{ Session::get('success') }}" , 'sucsess', {
+        swal("Message", "{{ Session::get('danger') }}", 'warning', {
             button: true,
-            button: "Ok"
-
+            button: "Ok",
+            timer:3000,
+            dangerMode:true
+    
+        })
+    </script>
+    @endif
+    @if (Session::has('success'))
+    <script>
+        swal("Message", "{{ Session::get('success') }}", 'success', {
+            button: true,
+            button: "Ok",
+            timer:3000,
+            // dangerMode:true
+    
+        })
+    </script>
+    @endif
+    @if (Session::has('info'))
+    <script>
+        swal("Message", "{{ Session::get('info') }}", 'info', {
+            button: true,
+            button: "Ok",
+            timer:3000,
+            dangerMode:true
+    
         })
     </script>
     @endif
 @endsection
 
 @section('js')
+
     {{-- <script>
 
     $(document).ready(function() {
@@ -273,25 +307,25 @@
                     $.each(response.sections, function(key, item) {
                         $('tbody').append(
                             '<tr>\
-                                            <td>' + item.name + '</td>\
-                                            <td>' + shortAbsoluteDiffForHumans(item.created_at) +
+                                                <td>' + item.name + '</td>\
+                                                <td>' + shortAbsoluteDiffForHumans(item.created_at) +
                             '</td>\
-                                    <a href="#" class="btn btn-sm btn-outline-danger " data-section_id="' +
+                                        <a href="#" class="btn btn-sm btn-outline-danger " data-section_id="' +
                             item.id +
                             '" data-toggle="modal" data-target="add_students">اضافة طلاب</a>\
-                                            </td>\
-                                            <td>\
-                                                <a href="#" class="btn btn-sm btn-outline-success edit_section_item" data-section_id="' +
+                                                </td>\
+                                                <td>\
+                                                    <a href="#" class="btn btn-sm btn-outline-success edit_section_item" data-section_id="' +
                             item.id +
                             '" data-toggle="modal" data-target="#edit_section">تعديل</a>\
-                                            </td>\
-                                            <td>\
-                                                <a href="#" class="btn btn-sm btn-outline-danger delete_section_item" data-section_id="' +
+                                                </td>\
+                                                <td>\
+                                                    <a href="#" class="btn btn-sm btn-outline-danger delete_section_item" data-section_id="' +
                             item
                             .id + '" data-toggle="modal" data-target="#delete_section">حذف</a>\
-                                            </td>\
-                                            <td>\
-                                </tr>'
+                                                </td>\
+                                                <td>\
+                                    </tr>'
                         );
                     });
                 },

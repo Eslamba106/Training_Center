@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Settings extends Model
 {
     use HasFactory;
-    protected $fillable = ['web_name'];
+    protected $fillable = ['web_name' , 'logo'];
+
+    public function getImageUrlAttribute()
+    {
+        return asset('storage/' . $this->logo);
+    }
 }

@@ -17,9 +17,9 @@ class Attendance extends Model
         'excused'
     ];
 
-    public function students()
+    public function students_attendance()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class , 'student_id');
     }
 
     public function section()

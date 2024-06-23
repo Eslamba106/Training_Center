@@ -37,6 +37,11 @@
                     value="{{ old('web_name', $settings->web_name) }}" />
             </div>
             <div class="form-group">
+                <lable class="" for="">لوجو</lable>
+                <input type="file" name="logo" class="form-control mt-2"
+                    value="{{ old('logo', $settings->logo) }}" />
+            </div>
+            <div class="form-group">
                 <button type="submit" class="btn btn-success">حفظ</button>
             </div>
         </form>

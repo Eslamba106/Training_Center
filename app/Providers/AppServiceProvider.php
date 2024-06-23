@@ -22,9 +22,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         
-        // $settings = Settings::first();
-        // if ($settings) {
-        //     View::share('settings', $settings);
-        // }
+        $settings = Settings::first();
+        if ($settings) {
+            View::share('settings', $settings);
+        }
     }
 }

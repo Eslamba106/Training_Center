@@ -12,85 +12,119 @@
     {{ route('admin.logout') }}
 @endsection
 @section('page_name')
-اضافة طلاب الي القسم
-
+    اضافة طلاب الي القسم
 @endsection
 
 @section('content')
-    {{-- <div class="m-2">
-    <a href="" class="btn btn-sm btn-outline-primary mr-2" href="#" data-category_id="" data-toggle="modal"
-        data-target="#category_id">اضافة قسم</a>
-</div> --}}
-    <div class="modal fade" id="add_students" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">اضافة طالب</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <form action="{{ route('admin.add_students.store') }}" method="post">
-                        @csrf
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label for="">بداية من :</label>
-                                <input type="hidden" name="section_id" value="{{ $section->id }}">
-                                <input class="form-control" type="date" name="from">
-                            </div>
-                            <div class="form-group">
-                                <label for="">الي :</label>
-                                <input type="hidden" name="student_id_add" id="student_id_add">
+    <form action="{{ route('admin.add_students.store') }}" method="post">
+        @csrf
+        <input type="hidden" name="student_id_add" id="student_id_add">
+        <input type="hidden" name="section_id" value="{{ $section->id }}">
+
+        {{-- <div class="form-group">
+            <input type="hidden" name="section_id" value="{{ $section->id }}">
+            <label for="">بداية من :</label>
+            <input class="form-control" type="date" name="from">
+        </div> --}}
+
+        {{-- <div class="form-group">
+            <label for="">الي :</label>
+            <input class="form-control" type="date" name="to">
+            <input type="hidden" name="student_id_add" id="student_id_add">
 
 
-                                <input class="form-control"  type="date" name="to">
-                            </div>
-
-                            {{-- <div class="form-group">
-                            <label for="">مدة الدورة</label>
-                            <input class="form-control" type="text" name="period">
-                        </div> --}}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                            <button type="submit" class="btn btn-success">حفظ</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>الاسم</th>
-                <th>العمليات</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @forelse ($students as $item)
+        </div> --}}
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>{{ $item->name }}</td>
-                    {{-- <td>{{ $item->period }}</td> --}}
-                    <td>{{ $item->created_at->shortAbsoluteDiffForHumans() }}</td>
-                    <td>
-                        <a href="" id="add_students" value="{{ $item->id }}"
-                            data-add_student_id="{{ $item->id }}" class="btn btn-sm btn-outline-primary"
-                             data-target="#add_students" data-toggle="modal">اضافة
+                    <th>الاسم</th>
+                    <th>العمليات</th>
+                    <th>بداية من :</th>
+                    <th>الي :</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @forelse ($students as $student)
+                    <tr>
+                        <td>{{ $student->name }}</td>
+                        {{-- @if (isset(
+        $student->attendance()->where('attendence_date', date('Y-m-d'))->where('section_id', $section->id)->first()->student_id,
+    ))
+                            <label class="block text-gray-500 font-semibold sm:border-r sm:pr-4">
+                                <input name="attendences[{{ $student->id }}]" disabled
+                                    {{ $student->attendance()->first()->attendence_status == 1 ? 'checked' : '' }}
+                                    class="leading-tight" type="radio" value="presence">
+                                <span class="text-success">حضور</span>
+                            </label>
+
+                            <label class="ml-4 block text-gray-500 font-semibold">
+                                <input name="attendences[{{ $student->id }}]" disabled
+                                    {{ $student->attendance()->first()->attendence_status == 0 ? 'checked' : '' }}
+                                    class="leading-tight" type="radio" value="absent">
+                                <span class="text-danger">غياب</span>
+                            </label>
+                        @else
+                            <label class="block text-gray-500 font-semibold sm:border-r sm:pr-4">
+                                <input name="attendences[{{ $student->id }}]" class="leading-tight" type="radio"
+                                    value="presence">
+                                <span class="text-success">حضور</span>
+                            </label>
+
+                            <label class="ml-4 block text-gray-500 font-semibold">
+                                <input name="attendences[{{ $student->id }}]" class="leading-tight" type="radio"
+                                    value="absent">
+                                <span class="text-danger">غياب</span>
+                            </label>
+                        @endif --}}
+                        {{-- <td>
+                            <a href="" id="add_students" value="{{ $student->id }}"
+                                data-add_student_id="{{ $student->id }}" class="btn btn-sm btn-outline-primary"
+                                data-target="#add_students" data-toggle="modal">اضافة
                             </a>
-                    </td>
+                        </td> --}}
+                        <td>
+                            {{-- <label class="block text-gray-500 font-semibold sm:border-r sm:pr-4">
+                                <input name="attendences[{{ $student->id }}]" disabled {{ '' }}
+                                    class="leading-tight" type="radio" value="presence">
+                                <span class="text-success">اضافة</span>
+                            </label> --}}
 
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="7">لا يوجد طلاب خارج هذا القسم</td>
-                </tr>
-            @endforelse
-            {{-- @else
+                            <label class="block text-gray-500 font-semibold sm:border-r sm:pr-4">
+                                <input name="status[{{ $student->id }}]" class="leading-tight" type="radio"
+                                    value="presence">
+                                <span class="text-success">اضافة</span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class="block text-gray-500 font-semibold sm:border-r sm:pr-4">
+                                {{-- <label for="">بداية من :</label> --}}
+                                <input class="form-control" type="date" name="from[{{ $student->id }}]">
+                            </label>
+                        </td>
+                        <td>
+                            <label class="block text-gray-500 font-semibold sm:border-r sm:pr-4">
+                                {{-- <label for="">الي :</label> --}}
+                                <input class="form-control" type="date" name="to[{{ $student->id }}]">
+                            </label>
+                        </td>
+
+
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="7">لا يوجد طلاب خارج هذا القسم</td>
+                    </tr>
+                @endforelse
+                {{-- @else
 
 @endif --}}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <P>
+            <button class="btn btn-success mr-2 " type="submit">حفظ</button>
+        </P>
+    </form>
 @endsection
 @section('js')
     <script>

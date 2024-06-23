@@ -39,12 +39,18 @@
                                     </tr>
                                     <tr>
 
-                                        <td class="width30">الدرجة من 10</td>
+                                        <td class="width30">التقييم</td>
 
                                         <td>
                                             <?php $i = 0; ?>
                                             <input class="form-control" type="hidden" name="ids[]" value="{{ $item->id }}" >
-                                            <input class="form-control" type="text" name="rate[]">
+                                            {{-- <input class="form-control" type="text" name="rate[]"> --}}
+                                            <select class="form-control" name="rate[]" id="">
+                                                <option value="1">Poor</option>
+                                                <option value="2">Good</option>
+                                                <option value="3">Very Good</option>
+                                                <option value="4">Excellent</option>
+                                            </select>
                                         </td>
                                     </tr>
 
