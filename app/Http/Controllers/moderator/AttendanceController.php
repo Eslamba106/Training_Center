@@ -15,19 +15,18 @@ class AttendanceController extends Controller
     {
         $moderator = auth()->guard('moderator')->user();
         $section = auth()->guard('moderator')->user()->section;
-        $students = Attendance::where('section_id' , $moderator->section_id)->get();
+        $allstudents = Attendance::where('section_id' , $moderator->section_id)->get();
         $section_students = SectionStudent::where('section_id', $moderator->section_id)->get();
-
-        // $students = Attendance::where('section_id' , $moderator->section_id)->get();
+        $student_ids = [];
+        $students = [];
         foreach ($section_students as $sectionstudent) {
             $student_ids[] = $sectionstudent->student_id;
         }
-
-        if ($student_ids != null) {
+// dd(empty($student_ids));
+        if (!empty($student_ids)) {
 
             $students = Student::whereIn('id', $student_ids)->get();
         }
-
         return view('moderator.attendance.index' , compact('students' , 'section'));
     }
 

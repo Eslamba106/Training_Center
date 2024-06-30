@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.dashboard')
 
 @section('title')
-    التقييمات
+{{ __("rates.rates") }}
 @endsection
 
 @section('home_route')
@@ -12,21 +12,21 @@
     {{ route('admin.logout') }}
 @endsection
 @section('page_name')
-التقييمات
+{{ __("rates.rates") }}
 @endsection
 
 @section('content')
     {{-- ############################## Create Section ################################## --}}
     <div class="m-2">
         <a href="" class="btn btn-sm btn-outline-primary mr-2" href="#" data-category_id="" data-toggle="modal"
-            data-target="#category_id">اضافة تقييم</a>
+            data-target="#category_id">{{ __("rates.add_rate") }}</a>
     </div>
     <div class="modal fade" id="category_id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">اضافة تقييم</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __("rates.add_rate") }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -34,11 +34,11 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="">العنوان</label>
+                                <label for="">{{ __("rates.title") }}</label>
                                 <input class="form-control" type="text" name="name">
                             </div>
                             <div class="form-group">
-                                <label for="">القسم</label>
+                                <label for="">{{ __("section.section") }}</label>
                                 <select class="form-control"  name="section_id" id="">
                                     @foreach ($sections as $item)
                                         
@@ -46,15 +46,10 @@
                                     @endforeach
                                 </select>
                             </div>
-
-                            {{-- <div class="form-group">
-                                <label for="">مدة الدورة</label>
-                                <input class="form-control" type="text" name="period">
-                            </div> --}}
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                            <button type="submit" class="btn btn-success">حفظ</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __("general.cancel") }}</button>
+                            <button type="submit" class="btn btn-success">{{ __("general.save") }}</button>
                         </div>
                     </form>
                 </div>
@@ -71,7 +66,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">تعديل تقييم</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __("rates.edit_rate") }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -83,12 +78,12 @@
 
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="">العنوان</label>
+                                <label for="">{{ __("rates.title") }}</label>
                                 <input type="hidden" name="id" id="edit_rate_id" value="">
                                 <input class="form-control" id="edit_name" type="text" name="name">
                             </div>
                             <div class="form-group">
-                                <label for="">القسم</label>
+                                <label for="">{{ __("section.section") }}</label>
                                 <select class="form-control"  name="section_id" id="edit_section_id_rate" >
                                     @foreach ($sections as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -99,8 +94,8 @@
                            
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                            <button type="submit" class="btn btn-success update_section">حفظ</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __("general.cancel") }}</button>
+                            <button type="submit" class="btn btn-success update_section">{{ __("general.save") }}</button>
                         </div>
                 </div>
                 </form>
@@ -115,7 +110,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">حذف تقييم</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __("rates.delete_rate") }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -124,13 +119,13 @@
                         @csrf
 
                         <div class="modal-body">
-                            هل انت متأكد من عملية الحذف
+                            {{ __("general.are_you") }}                            
                             <input type="hidden" name="id" id="delete_rate" value="">
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                            <button type="submit" class="btn btn-danger">حذف</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __("general.cancel") }}</button>
+                            <button type="submit" class="btn btn-danger">{{ __("general.delete") }}</button>
                         </div>
                     </form>
                 </div>
@@ -138,17 +133,14 @@
         </div>
     </div>
 
-
-
-
     {{-- ################################################### Show Sections ########################### --}}
     <table class="table">
         <thead>
             <tr>
-                <th>العنوان</th>
-                <th>القسم</th>
-                <th>اضيفت في</th>
-                <th>العمليات</th>
+                <th>{{ __("rates.title") }}</th>
+                <th>{{ __("section.section") }}</th>
+                <th>{{ __("general.created_at") }}</th>
+                <th>{{ __("general.operations") }}</th>
             </tr>
         </thead>
         <tbody>
@@ -158,35 +150,60 @@
                     <td>{{ $item->title }}</td>
                     <td>{{ $item->section->name }}</td>
                     <td>{{ $item->created_at->shortAbsoluteDiffForHumans() }}</td>
-                    {{-- <td>
-                        <a href="{{ route('admin.add_students' , $item->id ) }}" id="add_students" value="{{ $item->id }}"
-                            class="btn btn-sm btn-outline-primary" data-toggle="modal">اضافة طلاب</a>
-                    </td>
-                    <td>
-                        <a href="{{ route('admin.add_students.show' , $item->id ) }}" id="add_students" value="{{ $item->id }}"
-                            class="btn btn-sm btn-outline-primary" data-toggle="modal">عرض الطلاب</a>
-                    </td> --}}
                     <td>
                         <a href="" id="edit_rate_item" value="{{ $item->id }}"
                             class="btn btn-sm btn-outline-success" data-toggle="modal"
-                            data-section_id="{{ $item->id }}" data-target="#edit_rate">تعديل</a>
+                            data-section_id="{{ $item->id }}" data-target="#edit_rate">{{ __("general.edit") }}</a>
                     </td>
                     <td>
                         <a href="" class="btn btn-sm btn-outline-danger" data-toggle="modal"
-                            data-section_id="{{ $item->id }}" data-target="#delete_rate">حذف</a>
+                            data-section_id="{{ $item->id }}" data-target="#delete_rate">{{ __("general.delete") }}</a>
                     </td>
 
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7">لا يوجد تقييمات</td>
+                    <td colspan="7">{{ __("rates.there_no_rates") }}</td>
                 </tr>
             @endforelse
-            {{-- @else
 
-    @endif --}}
         </tbody>
     </table>
+
+    
+    @if (Session::has('danger'))
+    <script>
+        swal("Message", "{{ Session::get('danger') }}", 'warning', {
+            button: true,
+            button: "Ok",
+            timer:3000,
+            dangerMode:true
+    
+        })
+    </script>
+    @endif
+    @if (Session::has('success'))
+    <script>
+        swal("Message", "{{ Session::get('success') }}", 'success', {
+            button: true,
+            button: "Ok",
+            timer:3000,
+            // dangerMode:true
+    
+        })
+    </script>
+    @endif
+    @if (Session::has('info'))
+    <script>
+        swal("Message", "{{ Session::get('info') }}", 'info', {
+            button: true,
+            button: "Ok",
+            timer:3000,
+            dangerMode:true
+    
+        })
+    </script>
+    @endif
 @endsection
 
 @section('js')
@@ -285,7 +302,11 @@
 
         });
 
-
+        $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+                }
+            });
         $(document).on('click', '.update_section', function(e) {
             e.preventDefault();
             var sect_id = $('#edit_rate_id').val();
@@ -311,7 +332,6 @@
                         // Handle not found case
                     } else {
                         $('#edit_rate').modal('hide');
-                        // fetchSection();
 
                     }
                 },

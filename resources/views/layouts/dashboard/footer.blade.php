@@ -44,7 +44,3 @@
 </script>
 
 <script src="{{ URL::asset('js/calendar.init.js') }}"></script>
-
-@yield('js')
-</body>
-</html>

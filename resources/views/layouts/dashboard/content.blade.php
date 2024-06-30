@@ -11,7 +11,7 @@
               {{-- <li class="breadcrumb-item"><a href="#">Home</a></li> --}}
               {{-- <li class="breadcrumb-item active">Starter Page</li> --}}
               @section('breadcrumb')
-              <li class="breadcrumb-item"><a href="">الرئيسية</a></li>
+              <li class="breadcrumb-item"><a href="">{{ __("general.home") }} </a></li>
               @show
             </ol>
           </div><!-- /.col -->
@@ -42,6 +42,6 @@
     <!-- Default to the left -->
     <strong>Copyright &copy; 2024-<?php $mytime = Carbon\Carbon::now();
     echo $mytime->format('Y'); ?> <a
-            href="{{ config('app.developer_link') }}">{{ config('app.developer_name') }}</a>.</strong> كل الحقوق محفوظة .
+            href="{{ config('app.developer_link') }}">{{ config('app.developer_name') }}</a>.</strong>  {{ __("general.copy") }} .
 </footer>
 </div>

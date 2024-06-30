@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\student\RateController;
 use App\Http\Controllers\student\LoginController;
 use App\Http\Controllers\student\SectionController;
 use App\Http\Controllers\student\AttendanceController;
 use App\Http\Controllers\student\StudentDashboardController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +39,8 @@ Route::get('/section' , [SectionController::class , 'index'])->name('student.sec
 ############################## Attendance ###################################
 
 Route::get('/attendance/{id}' , [AttendanceController::class , 'index'])->name('student.attendance.show')->middleware('auth:student');
+
+############################## Rates ########################################
+
+Route::get('/rates', [RateController::class ,'index'])->name('student.rates')->middleware('auth:student');
+Route::get('/finalRates', [RateController::class ,'final'])->name('student.final_rate')->middleware('auth:student');

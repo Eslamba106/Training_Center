@@ -40,12 +40,13 @@ class RateController extends Controller
             return response()->json([
                 'status' => 200,
                 "rate" => $rate,
+                
             ]);
         }
         else{
             return response()->json([
                 'status' => 404,
-                "message" => "Rate Not Found",
+                "danger" => "Rate Not Found",
             ]);   
         }
     }
@@ -62,13 +63,13 @@ class RateController extends Controller
     
             return response()->json([
                 'status' => 200,
-                "message" => "Updated Successfully",
+                "success" => "Updated Successfully",
             ]);
         }
         else{
             return response()->json([
                 'status' => 404,
-                "message" => "Rate Not Found",
+                "danger" => "Rate Not Found",
             ]);   
         }
 

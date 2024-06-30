@@ -19,7 +19,8 @@ class StudentRateController extends Controller
     {
         $section = Section::findOrFail($id);
         $student = Student::findOrFail($request->student_id);
-        $rates = Rate::get();
+        $rates = Rate::where("section_id" , $section->id)->get();
+        // dd($rates); 
         return view('admin.student_rate.index' , compact(['rates' , 'section' , 'student']));
     }
 
@@ -27,7 +28,7 @@ class StudentRateController extends Controller
     {
         $rate_ids[] = $request->ids ;
         $rate[] = $request->rate ;
-        $allRate = Rate::all();
+        $allRate = Rate::where("section_id" ,$request->section_id)->get();
         $sum = 0;
         DB::beginTransaction();
         try {

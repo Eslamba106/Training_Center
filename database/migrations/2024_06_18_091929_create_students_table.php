@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->unique()->nullable();
             $table->string('email')->unique();
             $table->string('password');
-            // $table->foreignId('student_section_id')->constrained('sections')->cascadeOnDelete();
-            // $table->date('from')->nullable();
-            // $table->date('to')->nullable();
+            $table->double('phone')->unsigned();
+            $table->double('university_id')->unsigned()->unique();
             $table->timestamps();
         });
     }

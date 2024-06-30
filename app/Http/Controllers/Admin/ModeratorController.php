@@ -33,7 +33,7 @@ class ModeratorController extends Controller
             "section_id"    => $request->section_id, 
         ]);
 
-        return redirect()->route('admin.moderator');
+        return redirect()->route('admin.moderator')->with('success' , "تم اضافة المشرف");
     }
 
 

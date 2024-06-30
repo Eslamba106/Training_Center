@@ -15,4 +15,8 @@ class Rate extends Model
     {
         return $this->belongsTo(Section::class , 'section_id');
     }
+    public function rates()
+    {
+        return $this->hasMany(StudentRate::class);
+    }
 }

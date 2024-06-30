@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.dashboard')
 
 @section('title')
-    جدول الحضور والغياب
+    {{ __('attendance.attendance') }}
 @endsection
 
 @section('home_route')
@@ -12,15 +12,15 @@
     {{ route('student.logout') }}
 @endsection
 @section('page_name')
-    جدول الحضور والغياب
+{{ __('attendance.attendance') }}
 @endsection
 
 @section('content')
     <table class="table">
         <thead>
             <tr>
-                <th>اليوم</th>
-                <th>الحالة</th>
+                <th>{{ __('attendance.day') }}</th>
+                <th>{{ __('attendance.status') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -30,12 +30,12 @@
                     <td>{{ $item->attendence_date }}</td>
                     @if($item->attendence_status == 1)
                     <?php $total++ ?>
-                    <td>حضور</td>
+                    <td>{{ __("attendance.presence") }}</td>
                     @elseif($item->attendence_status == 0)
                     <td>
-                        غياب
+                        {{ __("attendance.absence") }}
                         @if($item->excused == 1) 
-                        ("اجازة")
+                        {{ __("attendance.vacation") }}
                         @else
                         @endif
                     </td>
@@ -43,13 +43,13 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7">لا يوجد جدول</td>
+                    <td colspan="7">  </td>
                 </tr>
             @endforelse
 
         </tbody>
     </table>
-    عدد ايام الحضور {{ $total }}
+    {{ __("moderator.count_presence_day") }}{{ $total }}
     @if (Session::has('success'))
         <script>
             swal("Message", "{{ Session::get('success') }}", 'sucsess', {

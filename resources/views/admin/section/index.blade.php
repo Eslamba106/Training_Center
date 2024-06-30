@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.dashboard')
 
 @section('title')
-    الاقسام
+    {{ __('section.sections') }}
 @endsection
 
 @section('home_route')
@@ -12,21 +12,21 @@
     {{ route('admin.logout') }}
 @endsection
 @section('page_name')
-    الاقسام
+    {{ __('section.sections') }}
 @endsection
 
 @section('content')
     {{-- ############################## Create Section ################################## --}}
     <div class="m-2">
         <a href="" class="btn btn-sm btn-outline-primary mr-2" href="#" data-category_id="" data-toggle="modal"
-            data-target="#category_id">اضافة قسم</a>
+            data-target="#category_id">{{ __('section.add_section') }}</a>
     </div>
     <div class="modal fade" id="category_id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">اضافة قسم</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('section.add_section') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -34,18 +34,15 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="">الاسم</label>
+                                <label for="">{{ __('general.name') }}</label>
                                 <input class="form-control" type="text" name="name">
                             </div>
 
-                            {{-- <div class="form-group">
-                                <label for="">مدة الدورة</label>
-                                <input class="form-control" type="text" name="period">
-                            </div> --}}
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                            <button type="submit" class="btn btn-success">حفظ</button>
+                            <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">{{ __('general.cancel') }}</button>
+                            <button type="submit" class="btn btn-success">{{ __('general.save') }}</button>
                         </div>
                     </form>
                 </div>
@@ -62,7 +59,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">تعديل قسم</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('section.edit_section') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -74,19 +71,17 @@
 
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="">الاسم</label>
+                                <label for="">{{ __('general.name') }}</label>
                                 <input type="hidden" name="id" id="edit_section_id" value="">
                                 <input class="form-control" id="edit_name" type="text" name="name">
                             </div>
 
-                            {{-- <div class="form-group">
-                                <label for="">مدة الدورة</label>
-                                <input class="form-control" id="edit_period" type="text" name="period">
-                            </div> --}}
+
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                            <button type="submit" class="btn btn-success update_section">حفظ</button>
+                            <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">{{ __('general.cancel') }}</button>
+                            <button type="submit" class="btn btn-success update_section">{{ __('general.save') }}</button>
                         </div>
                 </div>
                 </form>
@@ -101,7 +96,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">حذف قسم</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('section.delete_section') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -110,13 +105,14 @@
                         @csrf
 
                         <div class="modal-body">
-                            هل انت متأكد من عملية الحذف
+                            {{ __('general.are_you') }}
                             <input type="hidden" name="id" id="delete_section" value="">
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                            <button type="submit" class="btn btn-danger">حذف</button>
+                            <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">{{ __('general.cancel') }}</button>
+                            <button type="submit" class="btn btn-danger">{{ __('general.delete') }}</button>
                         </div>
                     </form>
                 </div>
@@ -131,10 +127,9 @@
     <table class="table">
         <thead>
             <tr>
-                <th>الاسم</th>
-                {{-- <th>مدة الدورة</th> --}}
-                <th>اضيفت في</th>
-                <th>العمليات</th>
+                <th>{{ __('general.name') }}</th>
+                <th>{{ __('general.created_at') }}</th>
+                <th>{{ __('general.operations') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -142,84 +137,61 @@
             @forelse ($sections as $item)
                 <tr>
                     <td>{{ $item->name }}</td>
-                    {{-- <td>{{ $item->period }}</td> --}}
                     <td>{{ $item->created_at->shortAbsoluteDiffForHumans() }}</td>
 
                     <td>
                         <a href="{{ route('admin.add_students', $item->id) }}" id="add_students"
-                            value="{{ $item->id }}" class="btn btn-sm btn-outline-primary" data-toggle="modal">اضافة
-                            طلاب</a>
+                            value="{{ $item->id }}" class="btn btn-sm btn-outline-primary">
+                            {{ __('section.add_students') }}
+                        </a>
                     </td>
                     <td>
                         <a href="{{ route('admin.add_students.show', $item->id) }}" id="add_students"
-                            value="{{ $item->id }}" class="btn btn-sm btn-outline-primary" data-toggle="modal">عرض
-                            الطلاب</a>
+                            value="{{ $item->id }}" class="btn btn-sm btn-outline-primary">
+                            {{ __('section.show_students') }}
+                        </a>
                     </td>
                     <td>
                         <a href="{{ route('admin.graduated', $item->id) }}" id="add_students"
-                            value="{{ $item->id }}" class="btn btn-sm btn-outline-primary" data-toggle="modal">
-                            الطلاب المتخرجين
-                            </a>
+                            value="{{ $item->id }}" class="btn btn-sm btn-outline-primary">
+                            {{ __('section.graduate_students') }}
+                        </a>
                     </td>
                     <td>
                         <a href="" id="edit_section_item" value="{{ $item->id }}"
                             class="btn btn-sm btn-outline-success" data-toggle="modal"
-                            data-section_id="{{ $item->id }}" data-target="#edit_section">تعديل</a>
+                            data-section_id="{{ $item->id }}"
+                            data-target="#edit_section">{{ __('general.edit') }}</a>
                     </td>
                     <td>
                         <a href="" class="btn btn-sm btn-outline-danger" data-toggle="modal"
-                            data-section_id="{{ $item->id }}" data-target="#delete_section">حذف</a>
+                            data-section_id="{{ $item->id }}"
+                            data-target="#delete_section">{{ __('general.delete') }}</a>
                     </td>
 
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7">لا يوجد اقسام</td>
+                    <td colspan="7">{{ __('section.there') }}</td>
                 </tr>
             @endforelse
-            {{-- @else
 
-    @endif --}}
         </tbody>
     </table>
 
-    @if (Session::has('danger'))
-    <script>
-        swal("Message", "{{ Session::get('danger') }}", 'warning', {
-            button: true,
-            button: "Ok",
-            timer:3000,
-            dangerMode:true
-    
-        })
-    </script>
-    @endif
+
     @if (Session::has('success'))
-    <script>
-        swal("Message", "{{ Session::get('success') }}", 'success', {
-            button: true,
-            button: "Ok",
-            timer:3000,
-            // dangerMode:true
-    
-        })
-    </script>
-    @endif
-    @if (Session::has('info'))
-    <script>
-        swal("Message", "{{ Session::get('info') }}", 'info', {
-            button: true,
-            button: "Ok",
-            timer:3000,
-            dangerMode:true
-    
-        })
-    </script>
+        <script>
+            swal("Message", "{{ Session::get('success') }}", 'success', {
+                button: true,
+                button: "Ok",
+                timer: 3000,
+            })
+        </script>
     @endif
 @endsection
 
 @section('js')
-
     {{-- <script>
 
     $(document).ready(function() {
@@ -307,25 +279,25 @@
                     $.each(response.sections, function(key, item) {
                         $('tbody').append(
                             '<tr>\
-                                                <td>' + item.name + '</td>\
-                                                <td>' + shortAbsoluteDiffForHumans(item.created_at) +
+                                                        <td>' + item.name + '</td>\
+                                                        <td>' + shortAbsoluteDiffForHumans(item.created_at) +
                             '</td>\
-                                        <a href="#" class="btn btn-sm btn-outline-danger " data-section_id="' +
+                                                <a href="#" class="btn btn-sm btn-outline-danger " data-section_id="' +
                             item.id +
                             '" data-toggle="modal" data-target="add_students">اضافة طلاب</a>\
-                                                </td>\
-                                                <td>\
-                                                    <a href="#" class="btn btn-sm btn-outline-success edit_section_item" data-section_id="' +
+                                                        </td>\
+                                                        <td>\
+                                                            <a href="#" class="btn btn-sm btn-outline-success edit_section_item" data-section_id="' +
                             item.id +
                             '" data-toggle="modal" data-target="#edit_section">تعديل</a>\
-                                                </td>\
-                                                <td>\
-                                                    <a href="#" class="btn btn-sm btn-outline-danger delete_section_item" data-section_id="' +
+                                                        </td>\
+                                                        <td>\
+                                                            <a href="#" class="btn btn-sm btn-outline-danger delete_section_item" data-section_id="' +
                             item
                             .id + '" data-toggle="modal" data-target="#delete_section">حذف</a>\
-                                                </td>\
-                                                <td>\
-                                    </tr>'
+                                                        </td>\
+                                                        <td>\
+                                            </tr>'
                         );
                     });
                 },
@@ -338,11 +310,11 @@
             e.preventDefault();
             var sect_id = $(this).data('section_id');
             $('#edit_section').modal('show');
-            // $.ajaxSetup({
-            //     headers: {
-            //         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
-            //     }
-            // });
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             $.ajax({
                 type: "GET",
                 url: "/admin/section/edit/" + sect_id,

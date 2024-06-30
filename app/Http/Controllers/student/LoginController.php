@@ -22,6 +22,6 @@ class LoginController extends Controller
 
     public function logout(){
         auth()->guard('student')->logout();
-        return redirect()->route('user.login.show');
+        return redirect()->route('student.login.show');
     }
 }

@@ -4,8 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\moderator\LoginController;
 use App\Http\Controllers\moderator\SectionController;
 use App\Http\Controllers\moderator\StudentController;
+use App\Http\Controllers\moderator\GraduatedController;
 use App\Http\Controllers\moderator\AttendanceController;
+use App\Http\Controllers\moderator\StudentRateController;
 use App\Http\Controllers\moderator\ModeratorDashboardController;
+
+
 
 
 
@@ -39,6 +43,7 @@ Route::get('/section' , [SectionController::class , 'index'])->name('moderator.s
 ############################## Student ######################################
 
 Route::get('/student' , [StudentController::class , 'index'])->name('moderator.students')->middleware('auth:moderator');
+Route::get('/student/show/{id}' , [StudentController::class , 'show'])->name('moderator.student.show')->middleware('auth:moderator');
 
 
 ############################## Attendance ###################################
@@ -46,3 +51,12 @@ Route::get('/student' , [StudentController::class , 'index'])->name('moderator.s
 Route::get('/attendance' , [AttendanceController::class , 'index'])->name('moderator.attendance.show')->middleware('auth:moderator');
 Route::post('/attendance/store' , [AttendanceController::class , 'store'])->name('moderator.attendance.store')->middleware('auth:moderator');
 Route::get('/attendance/print/{id}' , [ AttendanceController::class , 'print'])->name('moderator.attendance.print')->middleware('auth:moderator');
+
+
+################################# Student Rate ##############################
+Route::get('/student_rate/{id}' , [StudentRateController::class, 'index'])->name('moderator.student.rate')->middleware('auth:moderator');
+Route::post('/student_rate/store', [StudentRateController::class, 'store'])->name('moderator.student_rate.store')->middleware('auth:moderator');
+
+################################# Graduated #################################
+
+Route::get('/graduated' , [GraduatedController::class, 'index'])->name('moderator.graduated')->middleware('auth:moderator');

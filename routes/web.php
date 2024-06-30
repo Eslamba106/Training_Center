@@ -18,6 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/user/login', [LoginController::class , 'index'])->name('user.login.show');
-// Route::post('/login', [LoginController::class, 'login'])->name('user.login');
-// Route::get('/logout', [LoginController::class, 'logout'])->name('user.logout')->middleware('auth:user');
+Route::get('lang/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'ar'])) {
+    session()->put('locale', $locale);
+    }
+    return redirect()->back();
+})->name('lang');

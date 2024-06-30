@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>تسجيل الدخول كمشرف</title>
+    <title>{{ __("general.moderatorlogin") }} </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->
@@ -42,7 +42,7 @@
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">تسجيل الدخول</p>
+            <p class="login-box-msg">{{ __("general.login") }} </p>
             <div class="panel" id="admin">
                 <form action="{{ route('moderator.login') }}" method="post">
                     @csrf
@@ -72,7 +72,7 @@
     
                         <!-- /.col -->
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">دخول</button>
+                            <button type="submit" class="btn btn-primary btn-block btn-flat">{{ __("general.log") }} </button>
                         </div>
                         <!-- /.col -->
                     </div>

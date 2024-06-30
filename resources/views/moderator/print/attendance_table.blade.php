@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.dashboard')
 
 @section('title')
-معاينه طباعة قائمة الحضور والغياب للطلاب
+{{ __("attendance.preview") }}
 @endsection
 
 @section('home_route')
@@ -12,7 +12,7 @@
     {{ route('admin.logout') }}
 @endsection
 @section('page_name')
-معاينه طباعة قائمة الحضور والغياب للطلاب
+{{ __("attendance.preview") }}
 @endsection
 
 {{-- @section('content') --}}
@@ -35,10 +35,10 @@
                 <div class="card card-invoice">
                     <div class="card-body">
                         <div class="invoice-header">
-                            <h1 class="invoice-title">قائمة حضور وغياب قسم {{ $section->name }}</h1>
+                            <h1 class="invoice-title"> {{ __("attendance.list_section") }} {{ $section->name }}</h1>
                             <div class="billed-from">
                                 <h6>{{ $settings->web_name ?? "EslamSoft" }}</h6>
-                                <h6>المشرف علي القسم : {{ auth()->guard('moderator')->user()->name ?? "EslamSoft" }}</h6>
+                                <h6> {{ __("moderator.section_moderator") }} {{ auth()->guard('moderator')->user()->name ?? "EslamSoft" }}</h6>
                                 <p></p>
                             </div><!-- billed-from -->
                         </div><!-- invoice-header -->
@@ -51,10 +51,10 @@
                                 <thead>
                                     <tr>
                                         <th class="wd-20p">#</th>
-                                        <th class="wd-40p">الاسم</th>
-                                        <th class="tx-center">البريد الالكتروني</th>
-                                        <th class="tx-right">الحالة</th>
-                                         <th class="tx-right">ملاحظات</th>
+                                        <th class="wd-40p">{{ __("general.name") }} </th>
+                                        <th class="tx-center">{{ __("general.email") }} </th>
+                                        <th class="tx-right">{{ __("attendance.status") }} </th>
+                                         <th class="tx-right">{{ __("attendance.notes") }} </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,14 +65,14 @@
                                             <td class="tx-center">{{ $student->email }}</td>
                                             @foreach ($attendence_tables as $item)
                                             @if ($item->student_id == $student->id  && $item->attendence_status == 1)
-                                                <td class="tx-center">حضور</td>
+                                                <td class="tx-center">{{ __("attendance.presence") }} </td>
                                             @elseif ($item->student_id == $student->id  && $item->attendence_status == 0 && $item->excused ==0)
                                            
-                                            <td class="tx-center">غياب</td>
-                                            <td class="tx-center">بدون عذر</td>
+                                            <td class="tx-center">{{ __("attendance.absence") }} </td>
+                                            <td class="tx-center">{{ __("attendance.absence_without") }} </td>
                                             @elseif ($item->student_id == $student->id  && $item->attendence_status == 0 && $item->excused ==1)
-                                            <td class="tx-center">غياب</td>
-                                            <td class="tx-center">اجازة</td>
+                                            <td class="tx-center">{{ __("attendance.absence") }} </td>
+                                            <td class="tx-center">{{ __("attendance.vacation") }} </td>
                                             @endif
                                             @endforeach
                                         </tr>
@@ -88,7 +88,7 @@
 
 
                         <button class="btn btn-danger  float-left mt-3 mr-2" id="print_Button" onclick="printDiv()"> <i
-                                class="mdi mdi-printer ml-1"></i>طباعة</button>
+                                class="mdi mdi-printer ml-1"></i>{{ __("general.print") }} </button>
                     </div>
                 </div>
             </div>

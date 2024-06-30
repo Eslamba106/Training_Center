@@ -1,24 +1,24 @@
 @extends('layouts.dashboard.dashboard')
 
 @section('title')
-    قائمة الحضور والغياب للطلاب
+{{ __("attendance.list") }}
 @endsection
 
 @section('home_route')
-    {{ route('admin.dashboard') }}
+    {{ route('moderator.dashboard') }}
 @endsection
 
 @section('logout_route')
-    {{ route('admin.logout') }}
+    {{ route('moderator.logout') }}
 @endsection
 @section('page_name')
-    قائمة الحضور والغياب للطلاب
+{{ __("attendance.list") }}
 @endsection
 
 @section('content')
     <!-- row -->    <P>
         <a href="{{ route('moderator.attendance.print' , $section->id) }}">
-            <button class="btn btn-success mr-2 " type="submit">طباعة جدول الحضور</button>
+            <button class="btn btn-success mr-2 " type="submit">{{ __("attendance.print") }}</button>
         </a>
     </P>
 
@@ -42,7 +42,7 @@
 
 
 
-    <h5 style="font-family: 'Cairo', sans-serif;color: red"> تاريخ اليوم : {{ date('Y-m-d') }}</h5>
+    <h5 style="font-family: 'Cairo', sans-serif;color: red"> {{ __("attendance.date_day") }} : {{ date('Y-m-d') }}</h5>
     <form method="post" action="{{ route('moderator.attendance.store') }}">
 
         @csrf
@@ -52,14 +52,12 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>الاسم</th>
-                    {{-- <th>مدة الدورة</th> --}}
-                    <th>البريد الالكتروني</th>
-                    <th>العمليات</th>
+                    <th>{{ __("general.name") }}</th>
+                    <th>{{ __("general.email") }}</th>
+                    <th>{{ __("general.operations") }}</th>
                 </tr>
             </thead>
             <tbody>
-
                 @forelse ($students as $student)
                     <tr>
                         <td>{{ $loop->index + 1 }}</td>
@@ -67,32 +65,31 @@
                         <td>{{ $student->email }}</td>
 
                         <td>
-                            @if (isset(
-                                    $student->attendance()->where('attendence_date', date('Y-m-d'))->where('section_id', $section->id)->first()->student_id))
+                            @if (isset($student->attendance()->where('attendence_date', date('Y-m-d'))->where('section_id', $section->id)->first()->student_id))
                                 <label class="block text-gray-500 font-semibold sm:border-r sm:pr-4">
                                     <input name="attendences[{{ $student->id }}]" disabled
                                         {{ $student->attendance()->first()->attendence_status == 1 ? 'checked' : '' }}
                                         class="leading-tight" type="radio" value="presence">
-                                    <span class="text-success">حضور</span>
+                                    <span class="text-success">{{ __("attendance.presence") }}</span>
                                 </label>
 
                                 <label class="ml-4 block text-gray-500 font-semibold">
                                     <input name="attendences[{{ $student->id }}]" disabled
                                         {{ $student->attendance()->first()->attendence_status == 0 ? 'checked' : '' }}
                                         class="leading-tight" type="radio" value="absent">
-                                    <span class="text-danger">غياب</span>
+                                    <span class="text-danger">{{ __("attendance.absence") }}</span>
                                 </label>
                             @else
                                 <label class="block text-gray-500 font-semibold sm:border-r sm:pr-4">
                                     <input name="attendences[{{ $student->id }}]" class="leading-tight" type="radio"
                                         value="presence">
-                                    <span class="text-success">حضور</span>
+                                    <span class="text-success">{{ __("attendance.presence") }}</span>
                                 </label>
 
                                 <label class="ml-4 block text-gray-500 font-semibold">
                                     <input name="attendences[{{ $student->id }}]" class="leading-tight" type="radio"
                                         value="absent">
-                                    <span class="text-danger">غياب</span>
+                                    <span class="text-danger">{{ __("attendance.absence") }}</span>
                                 </label>
                             @endif
 
@@ -106,26 +103,26 @@
                                     <input name="excused[{{ $student->id }}]" disabled
                                         {{ $student->attendance()->first()->excused == 1 ? 'checked' : '' }}
                                         class="leading-tight" type="radio" value="1">
-                                    <span class="text-success">اجازة</span>
+                                    <span class="text-success">{{ __("attendance.vacation") }}</span>
                                 </label>
 
                                 <label class="ml-4 block text-gray-500 font-semibold">
                                     <input name="excused[{{ $student->id }}]" disabled
                                         {{ $student->attendance()->first()->excused == 0 ? 'checked' : '' }}
                                         class="leading-tight" type="radio" value="0">
-                                    <span class="text-danger">بدون عذر</span>
+                                    <span class="text-danger">{{ __("attendance.absence_without") }}</span>
                                 </label>
                             @else
                                 <label class="block text-gray-500 font-semibold sm:border-r sm:pr-4">
                                     <input name="excused[{{ $student->id }}]" class="leading-tight" type="radio"
                                         value="1">
-                                    <span class="text-success">اجازة</span>
+                                    <span class="text-success">{{ __("attendance.vacation") }}</span>
                                 </label>
 
                                 <label class="ml-4 block text-gray-500 font-semibold">
                                     <input name="excused[{{ $student->id }}]" class="leading-tight" type="radio"
                                         value="0">
-                                    <span class="text-danger">بدون بعذر</span>
+                                    <span class="text-danger">{{ __("attendance.absence_without") }}</span>
                                 </label>
                             @endif
 
@@ -134,16 +131,14 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7">لا يوجد طلاب</td>
+                        <td colspan="7">{{ __("student.there_no_student") }}</td>
                     </tr>
                 @endforelse
-                {{-- @else
 
-    @endif --}}
             </tbody>
         </table>
         <P>
-            <button class="btn btn-success mr-2 " type="submit">حفظ</button>
+            <button class="btn btn-success mr-2 " type="submit">{{ __("save") }}</button>
         </P>
     </form><br>
 

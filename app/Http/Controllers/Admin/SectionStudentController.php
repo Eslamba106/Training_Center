@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\Graduated;
@@ -13,6 +14,7 @@ class SectionStudentController extends Controller
 {
     public function index($id)
     {
+
         $sectionstudents1 = SectionStudent::where('section_id', $id)->get();
         $sectionstudents2 = Graduated::where('section_id', $id)->get();
         $student_ids1 = [];
@@ -38,7 +40,7 @@ class SectionStudentController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
+    
         $request->validate([
             'from' => "required",
             'to' => "required",
@@ -58,14 +60,14 @@ class SectionStudentController extends Controller
                 }
 
 
-
+                $uni_id = Student::where("id" , $studentid)->first()->university_id;
+                // dd($uni_id);
                 SectionStudent::create([
                     'student_id'=> $studentid,
                     'section_id'=> $request->section_id,
+                    'university_id'=> $uni_id,
                     'from'=> $request->from[$studentid],
                     'to'=> $request->to[$studentid],
-                    // 'attendence_status'=> $attendence_status,
-                    // 'excused'=> $request->excused[$studentid] ?? null
                 ]);
 
             }
@@ -89,9 +91,12 @@ class SectionStudentController extends Controller
 
     public function show($id)
     {
+        $date = Carbon::now();
+        // dd($date);
         $student_ids = [];
         $section = Section::findOrFail($id);
-        $section_students = SectionStudent::where('section_id', $section->id)->get();
+        $section_students = SectionStudent::where('section_id', $section->id)->where("from" , "<" , $date)->orWhere("from" , $date)->where("to" ,">=", $date)->get();
+        // dd($section_students);
         foreach ($section_students as $sectionstudent) {
             $student_ids[] = $sectionstudent->student_id;
         }

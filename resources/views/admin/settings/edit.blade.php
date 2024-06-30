@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.dashboard')
 
 @section('title')
-    تعديل الاعدادت
+{{ __("settings.edit_settings") }}
 @endsection
 
 @section('home_route')
@@ -12,7 +12,7 @@
     {{ route('admin.logout') }}
 @endsection
 @section('page_name')
-    تعديل الاعدادت
+    {{ __("settings.edit_settings") }}
 @endsection
 
 @section('content')
@@ -32,17 +32,17 @@
             @method('put')
 
             <div class="form-group">
-                <lable class="" for="">اسم الموقع</lable>
+                <lable class="" for="">{{ __("settings.website_name") }}</lable>
                 <input type="text" name="web_name" class="form-control mt-2"
                     value="{{ old('web_name', $settings->web_name) }}" />
             </div>
             <div class="form-group">
-                <lable class="" for="">لوجو</lable>
+                <lable class="" for="">{{ __("settings.logo") }}</lable>
                 <input type="file" name="logo" class="form-control mt-2"
                     value="{{ old('logo', $settings->logo) }}" />
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-success">حفظ</button>
+                <button type="submit" class="btn btn-success">{{ __("general.save") }}</button>
             </div>
         </form>
     </div>

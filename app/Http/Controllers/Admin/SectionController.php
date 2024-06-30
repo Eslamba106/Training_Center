@@ -25,7 +25,7 @@ class SectionController extends Controller
         Section::create([
             'name'   => $request->name,
         ]);
-        return back()->with('success' , 'تم اضافة القسم!');
+        return redirect()->route("admin.section")->with('success' , 'تم اضافة القسم!');
 
     }
 

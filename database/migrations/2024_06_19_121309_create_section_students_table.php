@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('section_id')->constrained('sections')->cascadeOnDelete();
+            $table->double("university_id");
             $table->date('from')->nullable();
             $table->date('to')->nullable();
             $table->timestamps();

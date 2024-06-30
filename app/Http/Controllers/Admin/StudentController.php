@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\Moderator;
 use Illuminate\Http\Request;
+use App\Imports\StudentsImport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
 {
@@ -32,9 +35,8 @@ class StudentController extends Controller
             'name'                  => $request->name,
             'email'                 => $request->email,
             'password'              => Hash::make($request->password) ,
-            // "student_section_id"    => $request->section_id, 
-            // 'from'                  => $request->from,
-            // 'to'                    => $request->to,
+            "university_id"         => $request->university_id, 
+            'phone'                 => $request->phone,
         ]);
 
         return redirect()->route('admin.student');
@@ -65,12 +67,11 @@ class StudentController extends Controller
         if($student)
         {
             $student->update([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                // 'student_section_id' => $request->section_id,
-                // 'from' => $request->from,
-                // 'to' => $request->to,
+                'name'                  => $request->name,
+                'email'                 => $request->email,
+                'password'              => Hash::make($request->password),
+                "university_id"         => $request->university_id, 
+                'phone'                 => $request->phone,
             ]);
     
             return response()->json([
@@ -101,5 +102,23 @@ class StudentController extends Controller
             "students" => $students,
         ]);
     }
+    public function show_excel(Request $request){
+        
+    }
+    public function import_excel(Request $request){
+        $request->validate([
+            'file' => 'required|mimes:csv,xlsx',
+        ]);
+    
+        // $timeToDate = strtotime($row["to"]);
+        // // dd($row["from"]);
+        // $fromDate = date('Y-m-d',$timeFromDate);
+        // $toDate = date('Y-m-d',$timeToDate);
+        $excel_section_id = $request->excel_section_id;
+        $file_name = $request->file("file");
+        Excel::queueImport(new StudentsImport($excel_section_id) , $file_name);
+        return redirect()->back()->with("success","Imported");
+    }
+
 
 }

@@ -2,22 +2,35 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Section;
 use App\Models\Student;
 use App\Models\Moderator;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\Models\SectionStudent;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class AttendanceController extends Controller
 {
     public function index($id)
     {
+
+
         $section = Section::where('id', $id)->first();
         $teachers = Moderator::all();
+        // dd($date);
+        $date = Carbon::now()->today();
+        // $date = Carbon::now()->toDateTime();
+        // $currentDate = Carbon::parse($date);
+        // dd($date);
+        $section_students = SectionStudent::where('section_id', $id)
+        ->where('from', '<=', $date)
+        ->where('to', '>=', $date)
+        ->get();        
 
-        $section_students = SectionStudent::where('section_id', $section->id)->get();
+        // dd($section_students);
         foreach ($section_students as $sectionstudent) {
             $student_ids[] = $sectionstudent->student_id;
         }

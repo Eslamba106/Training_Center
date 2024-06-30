@@ -12,6 +12,15 @@ class StudentRate extends Model
     protected $guarded =[];
 
     public function student_rate(){
-        return $this->belongsToMany(Student::class);
+        return $this->belongsToMany(Student::class , 'student_id') ;
+    }
+
+    public function rates()
+    {
+        return $this->belongsTo(Rate::class , 'rate_id');
+    }
+    public function section_rate()
+    {
+        return $this->belongsTo(Section::class , 'section_id');
     }
 }

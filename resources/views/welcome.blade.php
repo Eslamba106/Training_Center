@@ -33,18 +33,18 @@
 
                     <div style="border-radius: 15px;" class="col-lg-5 col-md-4 bg-white">
                         <div class="login-fancy pb-40 clearfix">
-                            <h3 style="font-family: 'Cairo', sans-serif" class="mb-30">حدد طريقة الدخول</h3>
+                            <h3 style="font-family: 'Cairo', sans-serif" class="mb-30">{{ __('general.select') }}</h3>
                             <div class="form-inline">
-                                <a class="btn btn-default col-lg-4" title="طالب" href="{{ route('student.login.show') }}"> 
+                                <a class="btn btn-default col-lg-4" title="{{ __("general.student") }}" href="{{ route('student.login.show') }}"> 
                                     {{-- href="{{route('login.show','student')}}"> --}}
                                     <img alt="user-img" width="100px;" src="{{URL::asset('images/student.png')}}">
                                 </a>
                                
-                                <a href="{{ route('moderator.login.show') }}" class="btn btn-default col-lg-4" title="معلم" >
+                                <a href="{{ route('moderator.login.show') }}" class="btn btn-default col-lg-4" title="{{ __("general.moderator") }}" >
                                     {{-- </a>href="{{route('login.show','teacher')}}"> --}}
                                     <img alt="user-img" width="100px;" src="{{URL::asset('images/teacher.png')}}">
                                 </a>
-                                <a class="btn btn-default col-lg-4" title="ادمن" href="{{ route('admin.login.show') }}">
+                                <a class="btn btn-default col-lg-4" title="{{ __("general.admin") }}" href="{{ route('admin.login.show') }}">
                                     <img alt="user-img" width="100px;" src="{{URL::asset('images/admin.png')}}">
                                 </a>
                             </div>

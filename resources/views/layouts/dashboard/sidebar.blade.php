@@ -2,7 +2,7 @@
     <!-- Brand Logo -->
     <a href="" class="brand-link">
 
-        <img src="{{ $settings->image_url }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+        <img src="{{ $settings->image_url ?? "" }}" alt="Logo" class="brand-image img-circle elevation-3"
         style="opacity: .8">
         <span class="brand-text font-weight-light">{{ $settings->web_name ?? "Eslam Soft" }}</span>
     </a>
@@ -31,11 +31,11 @@
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-                    <li class="nav-item has-treeview menu-open m-1">
+                    <li class="nav-item has-treeview menu-open m-1  ">
                         <a href="{{ route('admin.dashboard') }}" class="nav-link {{ (request()->is('admin/dashboard*')) ?'active':'' }}">
                             <ion-icon name="home-outline"></ion-icon>
                             <p>
-                                الرئيسية
+                                {{ __("general.home") }}
                                 {{-- <i class="right fas fa-angle-left"></i> --}}
                             </p>
                         </a>
@@ -44,7 +44,7 @@
                         <a href="{{ route('admin.section') }}" class="nav-link {{ (request()->is('admin/section*')) ?'active':'' }}">
                             <ion-icon name="book-outline"></ion-icon>
                             <p>
-                                الاقسام
+                                {{ __("section.sections") }}
                                 {{-- <i class="right fas fa-angle-left"></i> --}}
                             </p>
                         </a>
@@ -53,7 +53,7 @@
                         <a href="{{ route('admin.moderator') }}" class="nav-link {{ (request()->is('admin/moderator*')) ?'active':'' }}">
                             <ion-icon name="person-outline"></ion-icon>
                             <p>
-                                المشرفين
+                                {{ __("general.moderators") }}
                             </p>
                         </a>
                     </li>
@@ -61,7 +61,7 @@
                         <a href="{{ route('admin.student') }}" class="nav-link {{ (request()->is('admin/student*')) ?'active':'' }}">
                             <ion-icon name="people-outline"></ion-icon>
                             <p>
-                                الطلاب
+                                {{ __("general.students") }}
                             </p>
                         </a>
                     </li>
@@ -69,7 +69,7 @@
                         <a href="{{ route('admin.rate') }}" class="nav-link {{ (request()->is('admin/rate*')) ?'active':'' }}">
                             <ion-icon name="people-outline"></ion-icon>
                             <p>
-                                التقييمات
+                                {{ __("rates.rates") }}
                             </p>
                         </a>
                     </li>
@@ -77,7 +77,15 @@
                         <a href="" class="nav-link {{ (request()->is('admin/attendance*')) ?'active':'' }}">
                             <ion-icon name="people-outline"></ion-icon>
                             <p>
-                                 قائمة الحضور والغياب 
+                                {{ __("attendance.attendance") }}
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item has-treeview menu-open m-1">
+                        <a href="{{ route('admin.final_graduated') }}" class="nav-link {{ (request()->is('admin/final-graduated*')) ?'active':'' }}">
+                            <ion-icon name="people-outline"></ion-icon>
+                            <p>
+                                {{ __("graduated.graduates") }} 
                             </p>
                         </a>
                     </li>
@@ -93,7 +101,7 @@
                             {{-- <i class="nav-icon fas fa-tachometer-alt"></i> --}}
                             <ion-icon name="settings-outline"></ion-icon>
                             <p>
-                                الاعدادت
+                                {{ __("settings.settings") }}
                                 {{-- <i class="right fas fa-angle-left"></i> --}}
                             </p>
                         </a>
@@ -112,38 +120,34 @@
                     data-accordion="false">
     
                     <li class="nav-item has-treeview menu-open m-1">
-                        <a href="{{ route('moderator.dashboard') }}" class="nav-link {{ (request()->is('admin/dashboard*')) ?'active':'' }}">
+                        <a href="{{ route('moderator.dashboard') }}" class="nav-link {{ (request()->is('moderator/dashboard*')) ?'active':'' }}">
                             <ion-icon name="home-outline"></ion-icon>
                             <p>
-                                الرئيسية
-                                {{-- <i class="right fas fa-angle-left"></i> --}}
+                                {{ __("general.home") }}
                             </p>
                         </a>
                     </li>
                     <li class="nav-item has-treeview menu-open m-1">
-                        <a href="{{ route('moderator.section') }}" class="nav-link {{ (request()->is('admin/section*')) ?'active':'' }}">
-                            <ion-icon name="book-outline"></ion-icon>
+                        <a href="{{ route('moderator.graduated') }}" class="nav-link {{ (request()->is('moderator/graduated*')) ?'active':'' }}">
+                            <ion-icon name="battery-full-outline"></ion-icon>
                             <p>
-                                القسم
-                                {{-- <i class="right fas fa-angle-left"></i> --}}
+                                {{ __("graduated.graduates") }}
                             </p>
                         </a>
                     </li>
                     <li class="nav-item has-treeview menu-open m-1">
-                        <a href="{{ route('moderator.students') }}" class="nav-link {{ (request()->is('admin/student*')) ?'active':'' }}">
+                        <a href="{{ route('moderator.students') }}" class="nav-link {{ (request()->is('moderator/student*')) ?'active':'' }}">
                             <ion-icon name="people-outline"></ion-icon>
                             <p>
-                                الطلاب
-                                {{-- <i class="right fas fa-angle-left"></i> --}}
+                                {{ __("general.students") }}
                             </p>
                         </a>
                     </li>
                     <li class="nav-item has-treeview menu-open m-1">
-                        <a href="{{ route('moderator.attendance.show') }}" class="nav-link {{ (request()->is('admin/student*')) ?'active':'' }}">
+                        <a href="{{ route('moderator.attendance.show') }}" class="nav-link {{ (request()->is('moderator/attendance*')) ?'active':'' }}">
                             <ion-icon name="reader-outline"></ion-icon>
                             <p>
-                                جدول الحضور والغياب
-                                {{-- <i class="right fas fa-angle-left"></i> --}}
+                                {{ __("attendance.attendance") }}
                             </p>
                         </a>
                     </li>
@@ -158,24 +162,40 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <li class="nav-item has-treeview menu-open m-1">
-                        <a href="{{ route('student.dashboard') }}" class="nav-link {{ (request()->is('admin/dashboard*')) ?'active':'' }}">
+                        <a href="{{ route('student.dashboard') }}" class="nav-link {{ (request()->is('moderator/dashboard*')) ?'active':'' }}">
                             <ion-icon name="home-outline"></ion-icon>
                             <p>
-                                الرئيسية
-                                {{-- <i class="right fas fa-angle-left"></i> --}}
+                                {{ __("general.home") }}
                             </p>
                         </a>
                     </li>
                     <li class="nav-item has-treeview menu-open m-1">
-                        <a href="{{ route('student.section') }}" class="nav-link {{ (request()->is('admin/section*')) ?'active':'' }}">
+                        <a href="{{ route('student.section') }}" class="nav-link {{ (request()->is('moderator/section*')) ?'active':'' }}">
                             <ion-icon name="book-outline"></ion-icon>
                             <p>
-                                الاقسام
-                                {{-- <i class="right fas fa-angle-left"></i> --}}
+                                {{ __("section.sections") }}
                             </p>
                         </a>
                     </li>
-
+                    <li class="nav-item has-treeview menu-open m-1">
+                        <a href="{{ route('student.rates') }}" class="nav-link {{ (request()->is('moderator/section*')) ?'active':'' }}">
+                            <ion-icon name="star-half-outline"></ion-icon>
+                            <p>
+                                {{ __("rates.rates") }}
+                            </p>
+                        </a>
+                    </li>
+                    <?php $student =  App\Models\FinalGraduated::where('student_id' , auth()->guard('student')->user()->id)->first(); ?>
+                    @if (isset($student))
+                    <li class="nav-item has-treeview menu-open m-1">
+                        <a href="{{ route('student.final_rate') }}" class="nav-link {{ (request()->is('moderator/section*')) ?'active':'' }}">
+                            <ion-icon name="star-half-outline"></ion-icon>
+                            <p>
+                                {{ __("rates.finalrate") }}
+                            </p>
+                        </a>
+                    </li>
+                    @endif
 
 
 

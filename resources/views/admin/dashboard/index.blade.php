@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.dashboard')
 
 @section('title')
-    لوحة التحكم
+{{ __("general.dashboard") }}
 @endsection
 
 @section('home_route')
@@ -12,7 +12,8 @@
     {{ route('admin.logout') }}
 @endsection
 @section('page_name')
-    الرئيسية
+{{ __("general.home") }}
+
 @endsection
 
 @section('content')

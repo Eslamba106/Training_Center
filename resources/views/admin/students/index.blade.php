@@ -1,7 +1,7 @@
 @extends('layouts.dashboard.dashboard')
 
 @section('title')
-    الطلاب
+{{ __("general.students") }}
 @endsection
 
 @section('home_route')
@@ -12,21 +12,21 @@
     {{ route('admin.logout') }}
 @endsection
 @section('page_name')
-    الطلاب
+{{ __("general.students") }}
 @endsection
 
 @section('content')
     {{-- ############################## Create Section ################################## --}}
     <div class="m-2">
         <a href="" class="btn btn-sm btn-outline-primary mr-2" href="#" data-category_id="" data-toggle="modal"
-            data-target="#category_id">اضافة طالب</a>
+            data-target="#category_id">{{ __("student.add_student") }}</a>
     </div>
     <div class="modal fade" id="category_id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">اضافة طالب</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __("student.add_student") }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -34,41 +34,31 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="">الاسم</label>
+                                <label for="">{{ __("general.name") }}</label>
                                 <input class="form-control" type="text" name="name">
                             </div>
 
                             <div class="form-group">
-                                <label for="">البريد الالكتروني</label>
+                                <label for="">{{ __("general.email") }}</label>
                                 <input class="form-control" type="email" name="email">
                             </div>
-
                             <div class="form-group">
-                                <label for="">القسم</label>
-                                <select class="form-control" name="section_id" id="">
-                                    @forelse ($sections as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @empty
-                                    @endforelse
-                                </select>
+                                <label for="">{{ __("student.phone") }}</label>
+                                <input class="form-control" type="text" name="phone">
                             </div>
                             <div class="form-group">
-                                <label>بداية من :</label>
-                                <input class="form-control" type="date"  id="datepicker-action" name="from" data-date-format="yyyy-mm-dd">
-                            </div>
-                            <div class="form-group">
-                                <label>الي :</label>
-                                <input class="form-control" type="date"  id="datepicker-action" name="to" data-date-format="yyyy-mm-dd">
+                                <label for="">{{ __("student.university") }}</label>
+                                <input class="form-control" type="text" name="university_id">
                             </div>
 
                             <div class="form-group">
-                                <label for="">كلمة المرور</label>
+                                <label for="">{{ __("general.password") }}</label>
                                 <input class="form-control" type="password" name="password">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                            <button type="submit" class="btn btn-success">حفظ</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __("general.cancel") }}</button>
+                            <button type="submit" class="btn btn-success">{{ __("general.save") }}</button>
                         </div>
                     </form>
                 </div>
@@ -80,12 +70,12 @@
 
     {{-- ######################################### Edit Section ################################## --}}
 
-    <div class="modal fade" id="edit_moderator" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="edit_student_btn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">تعديل طالب</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __("student.edit_student") }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -97,26 +87,31 @@
 
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="">الاسم</label>
+                                <label for="">{{ __("general.name") }}</label>
                                 <input type="hidden" name="id" id="edit_student_id">
                                 <input id="edit_student_name" class="form-control" type="text" name="name">
                             </div>
 
                             <div class="form-group">
-                                <label for="">البريد الالكتروني</label>
+                                <label for="">{{ __("general.email") }}</label>
                                 <input id="edit_student_email" class="form-control" type="email" name="email">
                             </div>
-
-
-
                             <div class="form-group">
-                                <label for="">كلمة المرور</label>
+                                <label for="">{{ __("phone") }}</label>
+                                <input id="edit_student_phone" class="form-control" type="text" name="phone">
+                            </div>
+                            <div class="form-group">
+                                <label for="">{{ __("student.university") }}</label>
+                                <input id="edit_student_university_id" class="form-control" type="text" name="university_id">
+                            </div>
+                            <div class="form-group">
+                                <label for="">{{ __("general.password") }}</label>
                                 <input id="edit_student_password" class="form-control" type="password" name="password">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                            <button type="submit" class="btn btn-success update_student">حفظ</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __("general.cancel") }}</button>
+                            <button type="submit" class="btn btn-success update_student">{{ __("general.save") }}</button>
                         </div>
                 </div>
                 </form>
@@ -131,7 +126,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">حذف طالب</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __("student.delete") }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -140,13 +135,13 @@
                         @csrf
 
                         <div class="modal-body">
-                            هل انت متأكد من عملية الحذف
+                            {{ __("general.are_you") }}                            
                             <input type="hidden" name="id" id="delete_moderator_id" value="">
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                            <button type="submit" class="btn btn-danger">حذف</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __("general.cancel") }}</button>
+                            <button type="submit" class="btn btn-danger">{{ __("general.delete") }}</button>
                         </div>
                     </form>
                 </div>
@@ -161,11 +156,12 @@
     <table class="table">
         <thead>
             <tr>
-                <th>الاسم</th>
-                <th>البريد الالكتروني</th>
-                {{-- <th>المجموعة</th> --}}
-                <th>اضيف في</th>
-                <th>العمليات</th>
+                <th>{{ __("general.name") }}</th>
+                <th>{{ __("general.email") }}</th>
+                <th>{{ __("student.phone") }}</th>
+                <th>{{ __("student.university") }}</th>
+                <th>{{ __("general.created_at") }}</th>
+                <th>{{ __("general.operations") }}</th>
             </tr>
         </thead>
         <tbody>
@@ -174,22 +170,23 @@
                 <tr>
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->email }}</td>
-                    {{-- <td>{{ $item->student_section->name }}</td> --}}
+                    <td>{{ $item->phone }}</td>
+                    <td>{{ $item->university_id }}</td>
                     <td>{{ $item->created_at->shortAbsoluteDiffForHumans() }}</td>
                     <td>
                         <a href="" id="edit_student_item" value="{{ $item->id }}"
                             class="btn btn-sm btn-outline-success" data-toggle="modal"
-                            data-moderator_id="{{ $item->id }}" data-target="#edit_moderator">تعديل</a>
+                            data-moderator_id="{{ $item->id }}" data-target="#edit_student_btn">{{ __("general.edit") }}</a>
                     </td>
                     <td>
                         <a href="" class="btn btn-sm btn-outline-danger" data-toggle="modal"
-                            data-delete_moderator_id="{{ $item->id }}" data-target="#delete_moderator">حذف</a>
+                            data-delete_moderator_id="{{ $item->id }}" data-target="#delete_moderator">{{ __("general.delete") }}</a>
                     </td>
 
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7">لا يوجد طلاب</td>
+                    <td colspan="7">{{ __("student.there_no_student") }}</td>
                 </tr>
             @endforelse
 
@@ -199,6 +196,11 @@
 
 @section('js')
     <script>
+           $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
         function shortAbsoluteDiffForHumans(dateString) {
             const date = new Date(dateString);
             const now = new Date();
@@ -265,7 +267,7 @@
         $(document).on('click', '#edit_student_item', function(e) {
             e.preventDefault();
             var moder_id = $(this).data('moderator_id');
-            $('#edit_moderator').modal('show');
+            $('#edit_student_btn').modal('show');
 
             $.ajax({
                 type: "GET",
@@ -280,8 +282,9 @@
                         $('#edit_student_name').val(response.student.name)
                         $('#edit_student_email').val(response.student.email)
                         $('#edit_student_section_id').val(response.student.student_section_id)
-                        $('#edit_from').val(response.student.from)
-                        $('#edit_to').val(response.student.to)
+                        $('#edit_student_phone').val(response.student.phone)
+                        $('#edit_student_university_id').val(response.student.university_id)
+           
                     }
                 },
                 error: function(xhr, status, error) {
@@ -300,8 +303,8 @@
                 'email': $('#edit_student_email').val(),
                 'section_id': $('#edit_student_section_id').val(),
                 'password': $('#edit_student_password').val(),
-                'from': $('#edit_from').val(),
-                'to': $('#edit_to').val()
+                'phone': $('#edit_student_phone').val(),
+                'university_id': $('#edit_student_university_id').val()
             };
 
             $.ajax({
@@ -320,7 +323,7 @@
                     } else if (response.status === 404) {
                         // Handle not found case
                     } else {
-                        $('#edit_moderator').modal('hide');
+                        $('#edit_student_btn').modal('hide');
 
                     }
                 },
@@ -340,24 +343,3 @@
         })
     </script>
 @endsection
-
-{{-- 
-
-                            <div class="form-group">
-                                <label for="">المجموعة</label>
-                                <select id="edit_student_section_id" class="form-control" name="section_id" id="">
-                                    @forelse ($sections as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @empty
-                                    @endforelse
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>بداية من :</label>
-                                <input class="form-control" id="edit_from" type="date"  name="from" data-date-format="yyyy-mm-dd">
-                            </div>
-                            <div class="form-group">
-                                <label>الي :</label>
-                                <input class="form-control" id="edit_to" type="date"  name="to" data-date-format="yyyy-mm-dd">
-                            </div>
---}}

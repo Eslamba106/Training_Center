@@ -10,7 +10,7 @@ class SectionStudent extends Model
 {
     use HasFactory , SoftDeletes;
 
-    protected $fillable = ['id', 'student_id', 'section_id', 'from', 'to'];
+    protected $fillable = ['id', 'student_id', 'section_id', 'from', 'to' , "university_id"];
 
     public function section()
     {
