@@ -31,6 +31,11 @@ Route::get('/login', [AdminLoginController::class, 'index'])->middleware('guest'
 Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login');
 Route::get('/logout', [AdminLoginController::class, 'logout'])->name('admin.logout')->middleware('auth:admin');
 
+Route::get('login_settings/show_info_log', [AdminLoginController::class ,'settings_show'])->name("admin.login_settings.index")->middleware('auth:admin');
+Route::get('login_settings/edit_info_log', [AdminLoginController::class ,'settings_edit'])->name("admin.login_settings.edit")->middleware('auth:admin');
+Route::put('login_settings/update_info_log', [AdminLoginController::class ,'settings_update'])->name("admin.login_settings.update")->middleware('auth:admin');
+Route::post('/student_register/excel-sheet', [AdminLoginController::class,'import_excel'])->name("admin.student_register.import_excel")->middleware('auth:admin');
+
 ################################## Dashboard ###################
 
 Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard')->middleware('auth:admin');
@@ -73,6 +78,9 @@ Route::put('/settings/update/{id}', [SettingsController::class, 'update'])->name
 Route::get('/section/add_students/{id}', [SectionStudentController::class, 'index'])->name('admin.add_students')->middleware('auth:admin');
 Route::post('/section/add_students/store', [SectionStudentController::class, 'store'])->name('admin.add_students.store')->middleware('auth:admin');
 Route::get('/section/add_students/show/{id}', [SectionStudentController::class, 'show'])->name('admin.add_students.show')->middleware('auth:admin');
+Route::get('/section_students/edit/{id}', [SectionStudentController::class, 'edit'])->name('admin.student_section_edit')->middleware('auth:admin');
+Route::delete('/section/section_students/delete/', [SectionStudentController::class, 'delete'])->name('admin.student_section_delete')->middleware('auth:admin');
+Route::put('/section_students/update/{id}', [SectionStudentController::class, 'update'])->name('admin.student_section_update')->middleware('auth:admin');
 
 ############################### Rate #############################
 
@@ -81,7 +89,8 @@ Route::post('/rate/store', [RateController::class, 'store'])->name('admin.rate.s
 Route::get('/rate/edit/{id}', [RateController::class, 'edit'])->name('admin.rate.edit')->middleware('auth:admin');
 Route::put('/rate/update/{id}',[RateController::class, 'update'])->name('admin.rate.update')->middleware('auth:admin');
 Route::delete('/rate/delete', [RateController::class, 'delete'])->name('admin.rate.delete')->middleware('auth:admin');
-
+############################# Spceific Rate #####################################
+Route::get('/rate/{id}', [RateController::class, 'section_rate'])->name('admin.section_rate')->middleware('auth:admin');
 
 #################################### Student Rate #################################
 Route::get('rate/student_rate/{id}', [StudentRateController::class, 'index'])->name('admin.student_rate')->middleware('auth:admin');
@@ -94,11 +103,12 @@ Route::get('/attendance/{id}' , [AttendanceController::class , 'index'])->name('
 Route::post('/attendance/store' , [AttendanceController::class , 'store'])->name('admin.attendance.store')->middleware('auth:admin');
 Route::get('/attendance/print/{id}' , [ AttendanceController::class , 'print'])->name('admin.attendance.print')->middleware('auth:admin');
 Route::get('/attendance/report/{id}' , [ AttendanceController::class , 'report'])->name('admin.attendance.report')->middleware('auth:admin');
-Route::post('search_attendance' , [ AttendanceController::class , 'Search_invoices']);
+Route::post('search_attendance' , [ AttendanceController::class , 'Search_invoices'])->middleware('auth:admin');
 
 ################################## Geraduated From Section ########################
 
 Route::get('/section/graduated/{id}', [GraduatedController::class ,'index'])->name('admin.graduated')->middleware('auth:admin');
+Route::post('search_graduation' , [GraduatedController::class , 'search_graduation'])->middleware('auth:admin');
 
 ################################## Final Graduated ################################
 Route::get('/final-graduated', [FinalGraduatedController::class , 'index'])->name('admin.final_graduated')->middleware('auth:admin');

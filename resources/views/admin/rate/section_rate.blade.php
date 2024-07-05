@@ -42,10 +42,7 @@
                             <div class="form-group">
                                 <label for="">{{ __("section.section") }}</label>
                                 <select class="form-control"  name="section_id" id="">
-                                    @foreach ($sections as $item)
-                                        
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
+                                    <option value="{{ $section->id }}">{{ $section->name }}</option>
                                 </select>
                             </div>
                         </div>
@@ -88,9 +85,7 @@
                             <div class="form-group">
                                 <label for="">{{ __("section.section") }}</label>
                                 <select class="form-control"  name="section_id" id="edit_section_id_rate" >
-                                    @foreach ($sections as $item)
-                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                    @endforeach
+                                    <option value="{{ $section->id }}">{{ $section->name }}</option>
                                 </select>
                             </div>
 
@@ -148,10 +143,9 @@
         </thead>
         <tbody>
 
-            @forelse ($rate as $item)
+            @forelse ($rates as $item)
                 <tr>
                     <td>{{ $item->title }}</td>
-                    <td>{{ $item->section->name }}</td>
                     <td>{{ $item->created_at->shortAbsoluteDiffForHumans() }}</td>
                     <td>
                         <a href="" id="edit_rate_item" value="{{ $item->id }}"

@@ -138,10 +138,14 @@
             <button class="btn btn-success " type="submit">{{ __("general.save") }}</button>
         </P>
     </form><br>
-
+    {{-- {{ dd($student) }} --}}
+@if (isset($students[0]->attendance()->where('attendence_date', date('Y-m-d'))->where('section_id', $section->id)->first()->student_id))
+    
     <P class="m-2">
         <a href="{{ route('admin.attendance.print' , $section->id) }}">
             <button class="btn btn-success " type="submit">{{ __("attendance.print") }}</button>
         </a>
     </P>
+    @endif
+
 @endsection

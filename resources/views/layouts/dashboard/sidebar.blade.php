@@ -110,7 +110,14 @@
 
 
 
-
+                    <li class="nav-item has-treeview menu-open m-1">
+                        <a href="{{ route('admin.login_settings.index') }}" class="nav-link {{ (request()->is('admin/login_settings*')) ?'active':'' }}">
+                            <ion-icon name="reader-outline"></ion-icon>
+                            <p>
+                                {{ __("settings.login_settings") }}
+                            </p>
+                        </a>
+                    </li>
 
                 </ul>
             </nav>
@@ -151,6 +158,14 @@
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item has-treeview menu-open m-1">
+                        <a href="{{ route('moderator.settings.index') }}" class="nav-link {{ (request()->is('moderator/settings*')) ?'active':'' }}">
+                            <ion-icon name="reader-outline"></ion-icon>
+                            <p>
+                                {{ __("settings.login_settings") }}
+                            </p>
+                        </a>
+                    </li>
 
 
 
@@ -162,7 +177,7 @@
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                     data-accordion="false">
                     <li class="nav-item has-treeview menu-open m-1">
-                        <a href="{{ route('student.dashboard') }}" class="nav-link {{ (request()->is('moderator/dashboard*')) ?'active':'' }}">
+                        <a href="{{ route('student.dashboard') }}" class="nav-link {{ (request()->is('student/dashboard*')) ?'active':'' }}">
                             <ion-icon name="home-outline"></ion-icon>
                             <p>
                                 {{ __("general.home") }}
@@ -170,7 +185,7 @@
                         </a>
                     </li>
                     <li class="nav-item has-treeview menu-open m-1">
-                        <a href="{{ route('student.section') }}" class="nav-link {{ (request()->is('moderator/section*')) ?'active':'' }}">
+                        <a href="{{ route('student.section') }}" class="nav-link {{ (request()->is('student/section*')) ?'active':'' }}">
                             <ion-icon name="book-outline"></ion-icon>
                             <p>
                                 {{ __("section.sections") }}
@@ -178,17 +193,26 @@
                         </a>
                     </li>
                     <li class="nav-item has-treeview menu-open m-1">
-                        <a href="{{ route('student.rates') }}" class="nav-link {{ (request()->is('moderator/section*')) ?'active':'' }}">
+                        <a href="{{ route('student.rates') }}" class="nav-link {{ (request()->is('student/rates*')) ?'active':'' }}">
                             <ion-icon name="star-half-outline"></ion-icon>
                             <p>
                                 {{ __("rates.rates") }}
                             </p>
                         </a>
                     </li>
+                    <li class="nav-item has-treeview menu-open m-1">
+                        <a href="{{ route('student.settings.index') }}" class="nav-link {{ (request()->is('student/settings*')) ?'active':'' }}">
+                            <ion-icon name="reader-outline"></ion-icon>
+                            <p>
+                                {{ __("settings.login_settings") }}
+                            </p>
+                        </a>
+                    </li>
+
                     <?php $student =  App\Models\FinalGraduated::where('student_id' , auth()->guard('student')->user()->id)->first(); ?>
                     @if (isset($student))
                     <li class="nav-item has-treeview menu-open m-1">
-                        <a href="{{ route('student.final_rate') }}" class="nav-link {{ (request()->is('moderator/section*')) ?'active':'' }}">
+                        <a href="{{ route('student.final_rate') }}" class="nav-link {{ (request()->is('student/finalRates*')) ?'active':'' }}">
                             <ion-icon name="star-half-outline"></ion-icon>
                             <p>
                                 {{ __("rates.finalrate") }}

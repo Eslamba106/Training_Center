@@ -139,31 +139,35 @@
                     <td>{{ $item->name }}</td>
                     <td>{{ $item->created_at->shortAbsoluteDiffForHumans() }}</td>
 
-                    <td>
+                    <td class="">
                         <a href="{{ route('admin.add_students', $item->id) }}" id="add_students"
                             value="{{ $item->id }}" class="btn btn-sm btn-outline-primary">
                             {{ __('section.add_students') }}
                         </a>
-                    </td>
-                    <td>
+                    {{-- </td> --}}
+                    {{-- <td> --}}
                         <a href="{{ route('admin.add_students.show', $item->id) }}" id="add_students"
                             value="{{ $item->id }}" class="btn btn-sm btn-outline-primary">
                             {{ __('section.show_students') }}
                         </a>
-                    </td>
-                    <td>
+                    {{-- </td> --}}
+                    {{-- <td> --}}
                         <a href="{{ route('admin.graduated', $item->id) }}" id="add_students"
                             value="{{ $item->id }}" class="btn btn-sm btn-outline-primary">
                             {{ __('section.graduate_students') }}
                         </a>
-                    </td>
-                    <td>
+                        <a href="{{ route('admin.section_rate', $item->id) }}" id="add_students"
+                            value="{{ $item->id }}" class="btn btn-sm btn-outline-info">
+                            {{ __('rates.add_rate') }}
+                        </a>
+                    {{-- </td> --}}
+                    {{-- <td> --}}
                         <a href="" id="edit_section_item" value="{{ $item->id }}"
                             class="btn btn-sm btn-outline-success" data-toggle="modal"
                             data-section_id="{{ $item->id }}"
                             data-target="#edit_section">{{ __('general.edit') }}</a>
-                    </td>
-                    <td>
+                    {{-- </td> --}}
+                    {{-- <td> --}}
                         <a href="" class="btn btn-sm btn-outline-danger" data-toggle="modal"
                             data-section_id="{{ $item->id }}"
                             data-target="#delete_section">{{ __('general.delete') }}</a>

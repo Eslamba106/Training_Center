@@ -16,13 +16,12 @@ class AttendanceController extends Controller
         $moderator = auth()->guard('moderator')->user();
         $section = auth()->guard('moderator')->user()->section;
         $allstudents = Attendance::where('section_id' , $moderator->section_id)->get();
-        $section_students = SectionStudent::where('section_id', $moderator->section_id)->get();
+        $section_students = SectionStudent::where('section_id', $moderator->section_id)->withTrashed()->get();
         $student_ids = [];
         $students = [];
         foreach ($section_students as $sectionstudent) {
             $student_ids[] = $sectionstudent->student_id;
         }
-// dd(empty($student_ids));
         if (!empty($student_ids)) {
 
             $students = Student::whereIn('id', $student_ids)->get();
@@ -33,6 +32,7 @@ class AttendanceController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
+        $moderator = auth()->guard('moderator')->user();
         try {
 
             foreach ($request->attendences as $studentid => $attendence) {
@@ -46,7 +46,7 @@ class AttendanceController extends Controller
                 Attendance::create([
                     'student_id' => $studentid,
                     'section_id' => $request->section_id,
-                    'moderators_id' => 1,
+                    'moderators_id' => $moderator->id,
                     'attendence_date' => date('Y-m-d'),
                     'attendence_status' => $attendence_status,
                     'excused' => $request->excused[$studentid] ?? null,

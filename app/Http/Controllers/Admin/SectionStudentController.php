@@ -8,7 +8,9 @@ use App\Models\Student;
 use App\Models\Graduated;
 use Illuminate\Http\Request;
 use App\Models\SectionStudent;
+use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Route;
 
 class SectionStudentController extends Controller
 {
@@ -95,7 +97,7 @@ class SectionStudentController extends Controller
         // dd($date);
         $student_ids = [];
         $section = Section::findOrFail($id);
-        $section_students = SectionStudent::where('section_id', $section->id)->where("from" , "<" , $date)->orWhere("from" , $date)->where("to" ,">=", $date)->get();
+        $section_students = SectionStudent::where('section_id', $section->id)->get();
         // dd($section_students);
         foreach ($section_students as $sectionstudent) {
             $student_ids[] = $sectionstudent->student_id;
@@ -110,6 +112,64 @@ class SectionStudentController extends Controller
         }
 
         return view('admin.add_students.show', compact(['students', 'section', 'section_students']));
+    }
+
+    public function edit($id){
+        // $new = Route::current()->parameter('id');
+        $previousUrl = URL::previous();
+
+        // Parse the URL and extract the path
+        $parsedUrl = parse_url($previousUrl);
+        $path = $parsedUrl['path'];
+
+        // Extract the ID from the path (assuming the ID is the last segment)
+        $segments = explode('/', rtrim($path, '/'));
+        $new_id = end($segments);        // $new = request()->route('id');
+        $section = SectionStudent::where('student_id' , $id)->where('section_id' , $new_id)->get();
+        if($section)
+        {
+            return response()->json([
+                'status' => 200,
+                "section" => $section,
+            ]);
+        }
+        else{
+            return response()->json([
+                'status' => 404,
+                "message" => "Section Not Found",
+            ]);   
+        }
+    }
+    
+    public function update(Request $request, $id)
+    {
+        // dd($request->all());
+        $section = SectionStudent::where('section_id' , $request->section_id)->where("student_id" , $request->student_id)->first();
+        if($section)
+        {
+            $section->update([
+                'from' => $request->from,
+                'to' => $request->to,
+            ]);
+    
+            return response()->json([
+                'status' => 200,
+                "message" => "Updated Successfully",
+            ]);
+        }
+        else{
+            return response()->json([
+                'status' => 404,
+                "message" => "Section Not Found",
+            ]);   
+        }
+        
+    }
+    public function delete(Request $request)
+    {
+        $student = SectionStudent::where('student_id', $request->id)->where('section_id' , $request->section_id)->first();
+        $student->delete();
+        return redirect()->back();
     }
 
 }

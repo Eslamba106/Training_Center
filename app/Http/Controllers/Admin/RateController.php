@@ -82,5 +82,11 @@ class RateController extends Controller
         $rate->delete();
         return redirect()->route('admin.rate');
     }
+    public function section_rate($id)
+    {
+        $section = Section::findOrFail($id);
+        $rates = Rate::where('section_id' , $id)->get();
+        return view('admin.rate.section_rate', compact(['rates' , 'section' ]));
+    }
 
 }

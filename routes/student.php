@@ -18,13 +18,16 @@ use App\Http\Controllers\student\StudentDashboardController;
 | be assigned to the "web" middleware group. Make something great!
 |
  */
-
+    
 
 
 Route::get('/login', [LoginController::class , 'index'])->name('student.login.show');
 Route::post('/login', [LoginController::class, 'login'])->name('student.login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('student.logout')->middleware('auth:student');
 
+Route::get('settings/show_info_log', [LoginController::class ,'settings_show'])->name("student.settings.index")->middleware('auth:student');
+Route::get('settings/edit_info_log', [LoginController::class ,'settings_edit'])->name("student.settings.edit")->middleware('auth:student');
+Route::put('settings/update_info_log', [LoginController::class ,'settings_update'])->name("student.settings.update")->middleware('auth:student');
 
 ############################### Dashboard ###################################
 

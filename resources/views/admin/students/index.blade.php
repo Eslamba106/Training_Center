@@ -20,7 +20,42 @@
     <div class="m-2">
         <a href="" class="btn btn-sm btn-outline-primary mr-2" href="#" data-category_id="" data-toggle="modal"
             data-target="#category_id">{{ __("student.add_student") }}</a>
+        <a href="" class="btn btn-sm btn-outline-primary mr-2" data-target="#Excel_id" data-Excel_id="" data-toggle="modal" href="#">{{ __('student.add_excel') }}</a>
     </div>
+
+    <div class="modal fade" id="Excel_id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ __('student.add_excel') }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <form action="{{ route('admin.student_register.import_excel') }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="">{{ __('general.name') }}</label>
+                                <input class="form-control" type="file" name="file">
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                data-dismiss="modal">{{ __('general.cancel') }}</button>
+                            <button type="submit" class="btn btn-success">{{ __('general.save') }}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
     <div class="modal fade" id="category_id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">

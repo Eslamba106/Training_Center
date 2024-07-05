@@ -34,4 +34,5 @@ return [
     "password"          => "كلمة المرور",
     "welcome"           => "مرحبا بك ",
     "in_section"        => "في قسم",
+    "all"               => "الكل",
 ];

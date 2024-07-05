@@ -7,4 +7,5 @@ return
     "web_settings"         => "Website Settings",
     "website_name"          => "Website Name",
     "logo"                  => "Logo",
+    "login_settings"        => "Login Settings"
 ];

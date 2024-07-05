@@ -39,10 +39,18 @@
                     <td>{{ $item->student->email }}</td>
                     <td>{{ $student_section->from }}</td>
                     <td>{{ $student_section->to }}</td>
+                    <?php $date = Carbon\Carbon::now()->today(); 
+                        $final_date = date("Y-m-d" ,strtotime($student_section->to)) ;
+                        $today_date = date("Y-m-d" ,strtotime($date));
+                        // dd($final_date == $today_date);
+                    ?>
+                    @if ($final_date <= $today_date)
                     <td>
                         <a href="{{ route('moderator.student.rate' , $item->student->id) }}" id="edit_student_item" value="{{ $item->id }}"
                             class="btn btn-sm btn-outline-success" >{{ __("graduated.student_graduation") }} </a>
-                    </td>
+                    </td>   
+                    @endif
+                    
                  
 
                 </tr>

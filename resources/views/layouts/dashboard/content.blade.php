@@ -41,7 +41,6 @@
     </div>
     <!-- Default to the left -->
     <strong>Copyright &copy; 2024-<?php $mytime = Carbon\Carbon::now();
-    echo $mytime->format('Y'); ?> <a
-            href="{{ config('app.developer_link') }}">{{ config('app.developer_name') }}</a>.</strong>  {{ __("general.copy") }} .
+    echo $mytime->format('Y'); ?> </strong>  {{ __("general.copy") }} .
 </footer>
 </div>

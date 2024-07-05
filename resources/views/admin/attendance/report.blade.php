@@ -34,12 +34,57 @@
     <div>
 
         <div class="col-xl-12">
-            <div class="card mg-b-20">
+            <div class="card mg-b-20 ">
 
 
-                <div class="card-header pb-0">
-
+                <div class="card-header pb-0 bg-white">
                     <form action="/admin/search_attendance" method="POST" role="search" autocomplete="off">
+                        @csrf
+                        <input type="hidden" name="section_id" value="{{ $section->id }}">
+                
+                        <div class="row">
+                            <div class="col-lg-4" id="start_at">
+                                <label for="start_at">{{ __("attendance.from_date") }}</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </div>
+                                    </div>
+                                    <input class="form-control fc-datepicker" value="{{ $start_at ?? '' }}"
+                                           name="start_at" placeholder="YYYY-MM-DD" type="date">
+                                </div><!-- input-group -->
+                            </div>
+                
+                            <div class="col-lg-4" id="end_at">
+                                <label for="end_at">{{ __("attendance.to_date") }}</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </div>
+                                    </div>
+                                    <input class="form-control fc-datepicker" name="end_at"
+                                           value="{{ $end_at ?? '' }}" placeholder="YYYY-MM-DD" type="date">
+                                </div><!-- input-group -->
+                            </div>
+                            <div class="form-group">
+                                <label for="">{{ __("general.name") }}</label>
+                                <select name="student_id" class="form-control" id="">
+                                    <option value="">{{ __('general.all') }}</option>
+                                    @foreach ($allstudents as $item)
+                                        
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-4 align-self-end">
+                                <button class="btn btn-primary mt-4 form-control" >{{ __("attendance.search") }}</button>
+                            </div>
+                        </div>
+                    </form>
+                
+                    {{-- <form action="/admin/search_attendance" method="POST" role="search" autocomplete="off">
                         @csrf
                         <input type="hidden" name="section_id" value="{{ $section->id }}">
                         
@@ -77,7 +122,7 @@
                                 <button class="btn btn-primary ">{{ __("attendance.search") }}</button>
                             </div>
                         </div>
-                    </form>
+                    </form> --}}
 
                 </div>
                 <div class="card-body">

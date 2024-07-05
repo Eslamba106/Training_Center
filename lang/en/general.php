@@ -34,4 +34,5 @@ return [
     "password"          => "Password",
     "welcome"           => "Welcome ",
     "in_section"        => "In  Section",
+    "all"               => "All",
 ];

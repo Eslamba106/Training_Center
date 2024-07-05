@@ -29,7 +29,9 @@ use App\Http\Controllers\moderator\ModeratorDashboardController;
 Route::get('/login', [LoginController::class , 'index'])->name('moderator.login.show');
 Route::post('/login', [LoginController::class, 'login'])->name('moderator.login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('moderator.logout')->middleware('auth:moderator');
-
+Route::get('settings/show_info_log', [LoginController::class ,'settings_show'])->name("moderator.settings.index")->middleware('auth:moderator');
+Route::get('settings/edit_info_log', [LoginController::class ,'settings_edit'])->name("moderator.settings.edit")->middleware('auth:moderator');
+Route::put('settings/update_info_log', [LoginController::class ,'settings_update'])->name("moderator.settings.update")->middleware('auth:moderator');
 
 ############################### Dashboard ###################################
 
