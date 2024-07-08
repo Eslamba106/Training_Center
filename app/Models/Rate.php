@@ -9,7 +9,7 @@ class Rate extends Model
 {
     use HasFactory; 
 
-    public $fillable = ['title' , 'section_id'];
+    public $fillable = ['title' , 'section_id' ,'degree'];
 
     public function section()
     {

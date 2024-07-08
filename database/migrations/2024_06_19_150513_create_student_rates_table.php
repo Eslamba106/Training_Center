@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('section_id')->constrained('sections')->cascadeOnDelete();
             $table->foreignId('rate_id')->constrained('rates')->cascadeOnDelete();
-            $table->integer('rate')->default(0);
+            $table->float('rate')->default(0);
             $table->timestamps();
         });
     }

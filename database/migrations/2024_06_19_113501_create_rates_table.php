@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('rates', function (Blueprint $table) {
             $table->id();
             $table->text('title');
+            $table->integer('degree')->default(0);
             $table->foreignId('section_id')->constrained('sections')->cascadeOnDelete;
             $table->timestamps();
         });

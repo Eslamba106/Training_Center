@@ -52,8 +52,8 @@
                             @foreach ($allRates as $title => $degree)
                                 <tr>
                                     <td class="width30">{{ $title }}</td>
-
-                                    @if ($degree < 1.5 )
+                                    <td>{{ $degree }}</td>
+                                    {{-- @if ($degree < 1.5 )
                                 <td>{{ __("rates.poor") }} </td>
                                 @elseif ($degree < 2.5 && $degree >= 1.5)
                                 <td>{{ __("rates.good") }} </td>
@@ -61,23 +61,25 @@
                                 <td>{{ __("rates.very") }} </td>
                                 @elseif ($degree < 4.1 && $degree >= 3.5)
                                 <td>{{ __("rates.excellent") }} </td>
-                                @endif
+                                @endif --}}
 
                                 </tr>
                             @endforeach
                             <tr>
                                 <td class="width30">
-                                    التقييم النهائي
+                                    {{ __('rates.finalrate') }}
                                 </td>
-                                @if ($finalRate->rate >= 1.5 )
-                                <td>{{ __("rates.poor") }} </td>
-                                @elseif ($finalRate->rate < 2.5 && $finalRate->rate >= 1.5)
-                                <td>{{ __("rates.good") }} </td>
-                                @elseif ($finalRate->rate < 3.5 && $finalRate->rate >= 2.5)
-                                <td>{{ __("rates.very") }} </td>
-                                @elseif ($finalRate->rate < 4.1 && $finalRate->rate >= 3.5)
-                                <td>{{ __("rates.excellent") }} </td>
-                                @endif
+                                <td>
+                                    @if ($finalRate->percentage <= 64)
+                                        {{ __('rates.poor') }}
+                                    @elseif ($finalRate->percentage < 75 && $finalRate->percentage >= 65)
+                                        {{ __('rates.good') }}
+                                    @elseif ($finalRate->percentage < 85 && $finalRate->percentage >= 75)
+                                        {{ __('rates.very') }}
+                                    @elseif ($finalRate->percentage <= 100 && $finalRate->percentage >= 85)
+                                        {{ __('rates.excellent') }}
+                                    @endif
+                                </td>
                              
                                 
                             </tr>

@@ -85,13 +85,13 @@
                                             <td>{{ $item->sections->name }} </td>
                                             <td>{{ $item->graduated_date  }}</td>
                                             <td>
-                                                @if ($item->rate == 1)
+                                                @if ($item->percentage <= 64)
                                                     {{ __('rates.poor') }}
-                                                @elseif ($item->rate > 1 && $item->rate <= 2)
+                                                @elseif ($item->percentage < 75 && $item->percentage >= 65)
                                                     {{ __('rates.good') }}
-                                                @elseif ($item->rate > 2 && $item->rate <= 3)
+                                                @elseif ($item->percentage < 85 && $item->percentage >= 75)
                                                     {{ __('rates.very') }}
-                                                @elseif ($item->rate > 3 && $item->rate <= 4)
+                                                @elseif ($item->percentage <= 100 && $item->percentage >= 85)
                                                     {{ __('rates.excellent') }}
                                                 @endif
                                             </td>

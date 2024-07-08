@@ -40,8 +40,13 @@
 
                             </div>
                             <div class="form-group">
+                                <label for="">{{ __("rates.degree") }}</label>
+                                <input class="form-control" type="text" name="degree">
+                            </div>
+                            <div class="form-group">
                                 <label for="">{{ __("section.section") }}</label>
                                 <select class="form-control"  name="section_id" id="">
+                                    <option value="">{{ __('general.all') }}</option>
                                     <option value="{{ $section->id }}">{{ $section->name }}</option>
                                 </select>
                             </div>
@@ -83,8 +88,13 @@
                                 {{-- <input class="form-control" id="edit_name" type="text" name="name"> --}}
                             </div>
                             <div class="form-group">
+                                <label for="">{{ __("rates.degree") }}</label>
+                                <input type="text" name="degree" id="edit_degree_rate_id" value="">
+                            </div>
+                            <div class="form-group">
                                 <label for="">{{ __("section.section") }}</label>
                                 <select class="form-control"  name="section_id" id="edit_section_id_rate" >
+                                    <option value="">{{ __('general.all') }}</option>
                                     <option value="{{ $section->id }}">{{ $section->name }}</option>
                                 </select>
                             </div>
@@ -289,6 +299,7 @@
                         $('#edit_rate_id').val(sect_id)
                         $('#edit_name').val(response.rate.title)
                         $('#edit_section_id_rate').val(response.rate.section_id)
+                        $('#edit_degree_rate_id').val(response.rate.degree)
 
                     }
                 },
@@ -310,6 +321,7 @@
             var data = {
                 'name': $('#edit_name').val(),
                 'section_id': $('#edit_section_id_rate').val(),
+                'degree': $('#edit_degree_rate_id').val(),
             };
 
             $.ajax({

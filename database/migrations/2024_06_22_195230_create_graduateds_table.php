@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
             $table->foreignId('section_id')->constrained('sections')->cascadeOnDelete();
             $table->float('rate')->unsigned()->nullable();
+            $table->float('percentage')->unsigned()->nullable();
             $table->date('graduated_date')->nullable();
             $table->timestamps();
         });

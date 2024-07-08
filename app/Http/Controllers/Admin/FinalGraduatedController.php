@@ -35,8 +35,6 @@ class FinalGraduatedController extends Controller
     }
     public function store(Request $request)
     {
-        // dd($request->all());
-        // try {
 
         foreach ($request->graduated as $studentid => $graduated) {
             $section_count =0;
@@ -53,9 +51,5 @@ class FinalGraduatedController extends Controller
         }
 
         return redirect()->route('admin.final_graduated')->with('success' , "تم التخرج بنجاح");
-
-        // } catch (\Exception $e) {
-        //     return redirect()->back()->withErrors(['error' => $e->getMessage()]);
-        // }
     }
 }

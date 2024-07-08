@@ -13,65 +13,87 @@ class RateController extends Controller
     {
         $rate = Rate::all();
         $sections = Section::all();
-        return view('admin.rate.index' , compact(['rate' , 'sections']));
+        return view('admin.rate.index', compact(['rate', 'sections']));
     }
 
-    public function store (Request $request){
-        
-        $request->validate([
-            'name' => "required",
-            'section_id' => "required",
-        ]);
-    
-        Rate::create([
-            "title" => $request->name,
-            "section_id" => $request->section_id,
-        ]);
+    public function store(Request $request)
+    {
+        if (isset($request->section_id)) {
+            $request->validate([
+                'name' => "required",
+                'degree' => "required",
+            ]);
 
-        return redirect()->route('admin.rate');
+            Rate::create([
+                "title" => $request->name,
+                "section_id" => $request->section_id,
+                "degree" => $request->degree,
+            ]);
+
+            return redirect()->route('admin.rate')->with('success', 'تم اضافة التقييم بنجاح !');
+        } else 
+        {
+            $sections = Section::all();
+            foreach ($sections as $section) {
+                Rate::create([
+                    "title" => $request->name,
+                    "section_id" => $section->id,
+                    "degree" => $request->degree,
+                ]);
+            }
+            return redirect()->route('admin.rate')->with('success', 'تم اضافة التقييم بنجاح !');
+
+        }
     }
 
     public function edit($id)
     {
         $rate = Rate::find($id);
         // $section = Rate::find($id);
-        if($rate)
-        {
+        if ($rate) {
             return response()->json([
                 'status' => 200,
                 "rate" => $rate,
-                
+
             ]);
-        }
-        else{
+        } else {
             return response()->json([
                 'status' => 404,
                 "danger" => "Rate Not Found",
-            ]);   
+            ]);
         }
     }
-    public function update(Request $request , $id)
+    public function update(Request $request, $id)
     {
-        $rate = Rate::find($id);
-        // dd($request->all());
-        if($rate)
-        {
+        $rate = Rate::findOrFail($id);
+        $rates = Rate::all();
+        if (isset($request->section_id)) {
             $rate->update([
                 'title' => $request->name,
                 'section_id' => $request->section_id,
+                'degree' => $request->degree,
             ]);
-    
+
             return response()->json([
                 'status' => 200,
                 "success" => "Updated Successfully",
             ]);
-        }
-        else{
+        }  else 
+        {
+            $sections = Section::all();
+            foreach ($sections as $section) {
+                Rate::create([
+                    "title" => $request->name,
+                    "section_id" => $section->id,
+                    "degree" => $request->degree,
+                ]);
+            }
+            $rate->delete();
+
             return response()->json([
-                'status' => 404,
-                "danger" => "Rate Not Found",
-            ]);   
-        }
+                'status' => 200,
+                "success" => "Updated Successfully",
+            ]);        }
 
     }
 
@@ -85,8 +107,8 @@ class RateController extends Controller
     public function section_rate($id)
     {
         $section = Section::findOrFail($id);
-        $rates = Rate::where('section_id' , $id)->get();
-        return view('admin.rate.section_rate', compact(['rates' , 'section' ]));
+        $rates = Rate::where('section_id', $id)->get();
+        return view('admin.rate.section_rate', compact(['rates', 'section']))->with('danger' , 'تم الحذف بنجاح');
     }
 
 }

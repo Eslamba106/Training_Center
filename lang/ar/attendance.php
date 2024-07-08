@@ -15,7 +15,7 @@ return [
     "presence"          => "حضور",
     "absence"           => "غياب",
     "vacation"          => "اجازة",
-    "absence_without"   => "غياب بدون عذر",
+    "absence_without"   => "تأخير",
     "date_day"          => "تاريخ اليوم",
     "print"             => "طباعة جدول الحضور",
     "preview"           => "معاينة",

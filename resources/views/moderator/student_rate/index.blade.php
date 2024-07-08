@@ -44,7 +44,6 @@
                                         <td>
                                             <?php $i = 0; ?>
                                             <input class="form-control" type="hidden" name="ids[]" value="{{ $item->id }}" >
-                                            {{-- <input class="form-control" type="text" name="rate[]"> --}}
                                             <select class="form-control" name="rate[]" id="">
                                                 <option value="1">{{ __("rates.poor") }} </option>
                                                 <option value="2">{{ __("rates.good") }} </option>

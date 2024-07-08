@@ -26,29 +26,30 @@ class StudentRateController extends Controller
     {
         $rate_ids[] = $request->ids;
         $rate[] = $request->rate;
-        $allRate = Rate::where('section_id' , $request->section_id)->get();
+        $allRate = Rate::where('section_id', $request->section_id)->get();
         $sum = 0;
-        // dd(count($request->rate));
         DB::beginTransaction();
         try {
+            $total_degree = 0;
 
             for ($i = 0; $i < count($allRate); $i++) {
-
+                $rate_degree = Rate::where('id', $request->ids[$i])->first()->degree;
+                $total_degree += $rate_degree;
+                $final_rate_in_spcific_rate = ($request->rate[$i]) * (1 / 4) * ($rate_degree);
                 StudentRate::create([
                     'section_id' => $request->section_id,
                     'student_id' => $request->student_id,
-                    'rate' => $request->rate[$i],
+                    'rate' => $final_rate_in_spcific_rate,
                     'rate_id' => $request->ids[$i],
                 ]);
-                $sum += $request->rate[$i];
+                $sum += $final_rate_in_spcific_rate;
             }
-            $total = $sum / count($request->rate);
-            // dd($total);
-
+            $percentage = ($sum / $total_degree) * 100;
             $Graduated = Graduated::create([
                 'section_id' => $request->section_id,
                 'student_id' => $request->student_id,
-                'rate' => $total,
+                'rate' => $sum,
+                'percentage' => $percentage,
                 'graduated_date' => Carbon::now(),
             ]);
             $student = SectionStudent::where('section_id', $request->section_id)->where('student_id', $request->student_id)->first();

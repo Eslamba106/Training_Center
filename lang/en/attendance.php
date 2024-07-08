@@ -15,7 +15,7 @@ return [
     "presence"          => "Presence",
     "absence"           => "Absence",
     "vacation"          => "Vacation",
-    "absence_without"   => "Unexcused Absence",
+    "absence_without"   => "Late",
     "date_day"          => "Today's Date",
     "print"             => "Print Attendance Table",
     "preview"           => "Preview",

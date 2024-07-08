@@ -9,7 +9,7 @@ class Graduated extends Model
 {
     use HasFactory;
     protected $fillable = [ 
-        'student_id', 'section_id', 'rate', 'graduated_date'
+        'student_id', 'section_id', 'rate', 'graduated_date' ,'percentage'
     ];
     
     public function students()

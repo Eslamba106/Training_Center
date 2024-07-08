@@ -40,8 +40,13 @@
 
                             </div>
                             <div class="form-group">
+                                <label for="">{{ __("rates.degree") }}</label>
+                                <input class="form-control" type="text" name="degree">
+                            </div>
+                            <div class="form-group">
                                 <label for="">{{ __("section.section") }}</label>
                                 <select class="form-control"  name="section_id" id="">
+                                    <option value="">{{ __('general.all') }}</option>
                                     @foreach ($sections as $item)
                                         
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -85,9 +90,12 @@
                                 <textarea class="form-control" name="name" id="edit_name" cols="30" rows="10"></textarea>
                                 {{-- <input class="form-control" id="edit_name" type="text" name="name"> --}}
                             </div>
+                            <label for="">{{ __("rates.degree") }}</label>
+                            <input class="form-control" type="text" name="degree" id="edit_degree_rate">
                             <div class="form-group">
                                 <label for="">{{ __("section.section") }}</label>
                                 <select class="form-control"  name="section_id" id="edit_section_id_rate" >
+                                    <option value="">{{ __('general.all') }}</option>
                                     @foreach ($sections as $item)
                                     <option value="{{ $item->id }}">{{ $item->name }}</option>
                                     @endforeach
@@ -142,6 +150,7 @@
             <tr>
                 <th>{{ __("rates.title") }}</th>
                 <th>{{ __("section.section") }}</th>
+                <th>{{ __("rates.degree") }}</th>
                 <th>{{ __("general.created_at") }}</th>
                 <th>{{ __("general.operations") }}</th>
             </tr>
@@ -152,6 +161,7 @@
                 <tr>
                     <td>{{ $item->title }}</td>
                     <td>{{ $item->section->name }}</td>
+                    <td>{{ $item->degree }}</td>
                     <td>{{ $item->created_at->shortAbsoluteDiffForHumans() }}</td>
                     <td>
                         <a href="" id="edit_rate_item" value="{{ $item->id }}"
@@ -295,6 +305,7 @@
                         $('#edit_rate_id').val(sect_id)
                         $('#edit_name').val(response.rate.title)
                         $('#edit_section_id_rate').val(response.rate.section_id)
+                        $('#edit_degree_rate').val(response.rate.degree)
 
                     }
                 },
@@ -316,6 +327,7 @@
             var data = {
                 'name': $('#edit_name').val(),
                 'section_id': $('#edit_section_id_rate').val(),
+                'degree': $('#edit_degree_rate').val(),
             };
 
             $.ajax({
