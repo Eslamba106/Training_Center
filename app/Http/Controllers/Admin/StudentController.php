@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
+use App\Models\Rate;
 use App\Models\Section;
 use App\Models\Student;
+use App\Models\Graduated;
 use App\Models\Moderator;
+use App\Models\StudentRate;
 use Illuminate\Http\Request;
+use App\Models\SectionStudent;
 use App\Imports\StudentsImport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -118,6 +122,26 @@ class StudentController extends Controller
         $file_name = $request->file("file");
         Excel::queueImport(new StudentsImport($excel_section_id) , $file_name);
         return redirect()->back()->with("success","Imported");
+    }
+    
+    public function show(Request $request)
+    {
+        $student = Student::findOrFail($request->id);
+        $section = Section::where('id', $request->section_id)->first();
+        $section_students = SectionStudent::where('section_id', $section->id)->where('student_id', $request->id)->onlyTrashed()->first();
+        $student_rates = StudentRate::where('section_id', $section->id)->where('student_id', $request->id)->get();
+        $finalRate = Graduated::where('section_id', $section->id)->where('student_id', $request->id)->first();
+        $title_rate = []; //= Rate::where('section_id', $section->id)->get();
+        $rates = [];
+        foreach ($student_rates as $student_rate) {
+            $rates[$student_rate->rate_id] = $student_rate->rate;
+        }
+        $allRates = [];
+        foreach ($rates as $key => $value) {
+            $title_rate = Rate::where('id', $key)->first();
+            $allRates[$title_rate->title] = $value;
+        }
+        return view('moderator.students.show', compact(['student', 'section', 'section_students', 'allRates', 'finalRate']));
     }
 
 

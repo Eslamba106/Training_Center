@@ -67,6 +67,8 @@ Route::delete('/student/delete', [StudentController::class, 'delete'])->name('ad
 Route::get('/student/fetch', [StudentController::class, 'fetchSection'])->name('admin.student.fetch')->middleware('auth:admin');
 Route::get('/student/excel-sheet', [StudentController::class,'show_excel'])->name("admin.student.show_excel")->middleware('auth:admin');
 Route::post('/student/excel-sheet', [StudentController::class,'import_excel'])->name("admin.student.import_excel")->middleware('auth:admin');
+Route::get('/student/show' , [StudentController::class , 'show'])->name('admin.student.show')->middleware('auth:admin');
+
 ################################ Settings #######################
 
 Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
@@ -113,7 +115,7 @@ Route::post('search_graduation' , [GraduatedController::class , 'search_graduati
 ################################## Final Graduated ################################
 Route::get('/final-graduated', [FinalGraduatedController::class , 'index'])->name('admin.final_graduated')->middleware('auth:admin');
 Route::post('/final-graduated/store', [FinalGraduatedController::class , 'store'])->name('admin.final_graduated.store')->middleware('auth:admin');
-
+Route::post('daynumber', [AttendanceController::class , 'dayNumber'])->name('admin.dayNumber')->middleware('auth:admin');
 #################################################################################### 
 // Route::get('/attendance/Search_customers_index' , [ AttendanceController::class , 'Search_customers_index'])->name('Search_customers_index');
 // Route::post('/attendance/Search_customers' , [ AttendanceController::class , 'Search_customers'])->name('Search_customers');

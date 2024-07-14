@@ -5,11 +5,11 @@
 @endsection
 
 @section('home_route')
-    {{ route('admin.dashboard') }}
+    {{ route('moderator.dashboard') }}
 @endsection
 
 @section('logout_route')
-    {{ route('admin.logout') }}
+    {{ route('moderator.logout') }}
 @endsection
 @section('page_name')
 {{ __("student.the_student") }} : {{ $student->name }}
@@ -70,11 +70,11 @@
                                     {{ __('rates.finalrate') }}
                                 </td>
                                 <td>
-                                    @if ($finalRate->percentage <= 64)
+                                    @if ($finalRate->percentage <= 50)
                                         {{ __('rates.poor') }}
-                                    @elseif ($finalRate->percentage < 75 && $finalRate->percentage >= 65)
+                                    @elseif ($finalRate->percentage < 70 && $finalRate->percentage >= 50)
                                         {{ __('rates.good') }}
-                                    @elseif ($finalRate->percentage < 85 && $finalRate->percentage >= 75)
+                                    @elseif ($finalRate->percentage < 85 && $finalRate->percentage >= 70)
                                         {{ __('rates.very') }}
                                     @elseif ($finalRate->percentage <= 100 && $finalRate->percentage >= 85)
                                         {{ __('rates.excellent') }}

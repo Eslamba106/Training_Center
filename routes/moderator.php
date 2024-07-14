@@ -46,6 +46,7 @@ Route::get('/section' , [SectionController::class , 'index'])->name('moderator.s
 
 Route::get('/student' , [StudentController::class , 'index'])->name('moderator.students')->middleware('auth:moderator');
 Route::get('/student/show/{id}' , [StudentController::class , 'show'])->name('moderator.student.show')->middleware('auth:moderator');
+Route::get('/student/show_students' , [StudentController::class , 'showStudent'])->name('moderator.student_show')->middleware('auth:moderator');
 
 
 ############################## Attendance ###################################

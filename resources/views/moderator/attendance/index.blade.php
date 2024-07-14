@@ -16,8 +16,10 @@
 @endsection
 
 @section('content')
-    @if (isset(
-            $students[0]->attendance()->where('attendence_date', date('Y-m-d'))->where('section_id', $section->id)->first()->student_id))
+{{-- {{ dd($students) }} --}}
+@if ($students != [] )
+
+    @if (isset($students[0]->attendance()->where('attendence_date', date('Y-m-d'))->where('section_id', $section->id)->first()->student_id))
         <!-- row -->
         <P class="ml-2">
             <a href="{{ route('moderator.attendance.print', $section->id) }}">
@@ -25,6 +27,7 @@
             </a>
         </P>
     @endif
+@endif
 
     @if ($errors->any())
         <div class="alert alert-danger">

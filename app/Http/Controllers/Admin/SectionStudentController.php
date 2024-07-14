@@ -98,7 +98,6 @@ class SectionStudentController extends Controller
         $student_ids = [];
         $section = Section::findOrFail($id);
         $section_students = SectionStudent::where('section_id', $section->id)->get();
-        // dd($section_students);
         foreach ($section_students as $sectionstudent) {
             $student_ids[] = $sectionstudent->student_id;
         }

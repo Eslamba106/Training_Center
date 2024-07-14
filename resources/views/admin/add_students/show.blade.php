@@ -16,6 +16,7 @@
 @endsection
 
 @section('content')
+@if (count($students) != 0)
     <div class="mb-1">
         <a href="{{ route('admin.attendance.index', $section->id) }}" class="btn btn-sm btn-outline-primary m-2">
             {{ __('attendance.list') }}
@@ -25,6 +26,7 @@
         <a href="{{ route('admin.attendance.report', $section->id) }}"
             class="btn btn-sm btn-outline-primary m-2">{{ __('attendance.report') }}</a>
     </div>
+@endif
 
     {{-- ######################################### Edit Section ################################## --}}
 
@@ -135,6 +137,25 @@
                                             <?php $to = $section_student::where('student_id', $item->id)->pluck('to'); ?>
                                         @endforeach
                                         {{ \Carbon\Carbon::parse($to[0])->format('Y-m-d') ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="width30">{{ __('student.student_presence_count') }}</td>
+                                    <td>
+                                        {{ $item->attendance->where('attendence_status' , 1)->count() }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="width30">{{ __('student.student_absence_count') }}</td>
+                                    <td>
+                                        {{ $item->attendance->where('attendence_status' , 0)->count() }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="width30">{{ __('attendance.absence_without') }}</td>
+                                    <td>
+                                        
+                                        {{ $item->attendance->where('excused' , 1)->count() }}
                                     </td>
                                 </tr>
 

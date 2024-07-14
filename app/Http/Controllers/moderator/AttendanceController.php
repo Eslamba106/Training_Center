@@ -16,7 +16,9 @@ class AttendanceController extends Controller
         $moderator = auth()->guard('moderator')->user();
         $section = auth()->guard('moderator')->user()->section;
         $allstudents = Attendance::where('section_id' , $moderator->section_id)->get();
-        $section_students = SectionStudent::where('section_id', $moderator->section_id)->withTrashed()->get();
+        $section_students = SectionStudent::where('section_id', $moderator->section_id)
+        // ->withTrashed()
+        ->get();
         $student_ids = [];
         $students = [];
         foreach ($section_students as $sectionstudent) {

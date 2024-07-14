@@ -16,7 +16,8 @@
 @endsection
 
 @section('content')
-
+<a href="{{ route('moderator.student_show') }}" value=""
+class="btn btn-sm btn-outline-success m-2" >{{ __('moderator.details') }} </a>
     {{-- ################################################### Show Sections ########################### --}}
     <table class="table">
         <thead>
@@ -50,8 +51,10 @@
                             class="btn btn-sm btn-outline-success" >{{ __("graduated.student_graduation") }} </a>
                     </td>   
                     @endif
-                    
-                 
+                    {{-- <td>
+                        <a href="{{ route('moderator.student_show') }}" value=""
+                            class="btn btn-sm btn-outline-success" >{{ __('section.show_students') }} </a>
+                    </td>   --}}
 
                 </tr>
             @empty

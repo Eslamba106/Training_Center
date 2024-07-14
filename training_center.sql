@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 01, 2024 at 12:26 AM
+-- Generation Time: Jul 08, 2024 at 01:14 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,7 +41,7 @@ CREATE TABLE `admins` (
 --
 
 INSERT INTO `admins` (`id`, `name`, `email`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@admin.com', '$2y$10$A5Z20YC5LzinFiro9Lyq0eK7VGJh4yqWHgD2/Wpae45ADANNZfeiO', '2024-06-27 18:16:12', '2024-06-27 18:16:12');
+(1, 'Admin', 'admin@admin.com', '$2y$10$Ue2cOxGv/b62pzSKVnvZOerEIYsb4WeSHQB8Klbltqz8t46FVUCWK', '2024-06-27 18:16:12', '2024-07-02 20:29:37');
 
 -- --------------------------------------------------------
 
@@ -102,6 +102,7 @@ CREATE TABLE `graduateds` (
   `student_id` bigint(20) UNSIGNED NOT NULL,
   `section_id` bigint(20) UNSIGNED NOT NULL,
   `rate` double(8,2) UNSIGNED DEFAULT NULL,
+  `percentage` double(8,2) UNSIGNED DEFAULT NULL,
   `graduated_date` date DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -130,15 +131,15 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (4, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (5, '2024_06_17_092456_create_admins_table', 1),
 (6, '2024_06_17_111107_create_sections_table', 1),
-(34, '2024_06_18_091929_create_students_table', 2),
-(35, '2024_06_18_092504_create_moderators_table', 2),
-(36, '2024_06_19_094947_create_settings_table', 2),
-(37, '2024_06_19_113501_create_rates_table', 2),
-(43, '2024_06_19_121309_create_section_students_table', 3),
-(44, '2024_06_19_150513_create_student_rates_table', 3),
-(45, '2024_06_20_001033_create_attendances_table', 3),
-(46, '2024_06_22_195230_create_graduateds_table', 3),
-(47, '2024_06_27_164307_create_final_graduateds_table', 3);
+(54, '2024_06_18_091929_create_students_table', 2),
+(55, '2024_06_18_092504_create_moderators_table', 2),
+(56, '2024_06_19_094947_create_settings_table', 2),
+(63, '2024_06_19_113501_create_rates_table', 3),
+(64, '2024_06_19_121309_create_section_students_table', 3),
+(69, '2024_06_19_150513_create_student_rates_table', 4),
+(70, '2024_06_20_001033_create_attendances_table', 4),
+(73, '2024_06_22_195230_create_graduateds_table', 5),
+(74, '2024_06_27_164307_create_final_graduateds_table', 5);
 
 -- --------------------------------------------------------
 
@@ -195,7 +196,8 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `rates` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `title` varchar(255) NOT NULL,
+  `title` text NOT NULL,
+  `degree` int(11) NOT NULL DEFAULT 0,
   `section_id` bigint(20) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -251,7 +253,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `web_name`, `logo`, `created_at`, `updated_at`) VALUES
-(1, 'EslamSoft', 'settings/WqiEQT6OpaK1cghSsICJ6ocQs3wnyDoTW0fGNVpA.webp', NULL, '2024-06-29 18:27:47');
+(1, 'Eslam Soft', 'settings/vyyX73J8k5FwDYgu2yNylUC6HUhmCcN20pjDPVPJ.webp', NULL, '2024-07-05 18:25:36');
 
 -- --------------------------------------------------------
 
@@ -282,7 +284,7 @@ CREATE TABLE `student_rates` (
   `student_id` bigint(20) UNSIGNED NOT NULL,
   `section_id` bigint(20) UNSIGNED NOT NULL,
   `rate_id` bigint(20) UNSIGNED NOT NULL,
-  `rate` int(11) NOT NULL DEFAULT 0,
+  `rate` double(8,2) NOT NULL DEFAULT 0.00,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -407,6 +409,7 @@ ALTER TABLE `settings`
 ALTER TABLE `students`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `students_email_unique` (`email`),
+  ADD UNIQUE KEY `students_phone_unique` (`phone`),
   ADD UNIQUE KEY `students_university_id_unique` (`university_id`),
   ADD UNIQUE KEY `students_slug_unique` (`slug`);
 
@@ -452,19 +455,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `final_graduateds`
 --
 ALTER TABLE `final_graduateds`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `graduateds`
 --
 ALTER TABLE `graduateds`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `moderators`
@@ -482,19 +485,19 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `rates`
 --
 ALTER TABLE `rates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `sections`
 --
 ALTER TABLE `sections`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `section_students`
 --
 ALTER TABLE `section_students`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -506,13 +509,13 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `student_rates`
 --
 ALTER TABLE `student_rates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `users`

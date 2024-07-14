@@ -59,7 +59,7 @@
                             </div>
                         </div><br>
                     </form>
-                   
+
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -72,6 +72,7 @@
                                         <th class="border-bottom-0">{{ __('section.section') }}</th>
                                         <th class="border-bottom-0">{{ __('attendance.date') }}</th>
                                         <th class="border-bottom-0">{{ __('section.final_rates_for') }}</th>
+                                        <th class="border-bottom-0">{{ __('general.operations') }}</th>
 
                                     </tr>
                                 </thead>
@@ -83,18 +84,28 @@
                                             <td>{{ $i }}</td>
                                             <td>{{ $item->students->name }} </td>
                                             <td>{{ $item->sections->name }} </td>
-                                            <td>{{ $item->graduated_date  }}</td>
+                                            <td>{{ $item->graduated_date }}</td>
                                             <td>
-                                                @if ($item->percentage <= 64)
+                                                @if ($item->percentage <= 50)
                                                     {{ __('rates.poor') }}
-                                                @elseif ($item->percentage < 75 && $item->percentage >= 65)
+                                                @elseif ($item->percentage < 70 && $item->percentage > 50)
                                                     {{ __('rates.good') }}
-                                                @elseif ($item->percentage < 85 && $item->percentage >= 75)
+                                                @elseif ($item->percentage < 70 && $item->percentage > 85)
                                                     {{ __('rates.very') }}
                                                 @elseif ($item->percentage <= 100 && $item->percentage >= 85)
                                                     {{ __('rates.excellent') }}
                                                 @endif
                                             </td>
+                                            <form action="{{ route('admin.student.show') }}" method="GET">
+                                                @csrf
+                                                <td>
+                                                    <input type="hidden" name="id" value="{{ $item->students->id }}">
+                                                    <input type="hidden" name="section_id"
+                                                        value="{{ $item->sections->id }}">
+                                                    <button class="btn btn-primary"
+                                                        type="submit">{{ __('moderator.details') }}</button>
+                                                </td>
+                                            </form>
                                         </tr>
                                     @endforeach
                                 </tbody>

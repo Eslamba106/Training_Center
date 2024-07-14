@@ -33,17 +33,19 @@
 
             @forelse ($sections as $item)
             <?php 
-            $student_section = App\Models\SectionStudent::where('section_id', $item->id)->first();
+            // $student_section = App\Models\SectionStudent::where('section_id', $item->id)->first();
     ?>
                 <tr>
                     <td>{{ $item->name }}</td>
                     <?php $user = auth()->guard('student')->user() ;
                           $finalRate = App\Models\Graduated::where('section_id' , $item->id)->where('student_id' , $user->id)->first(); 
-                        //   dd($finalRate->rate);                   
+                        //   dd($finalRate->rate); 
+                        $student_section = App\Models\SectionStudent::where('section_id', $item->id)->where('student_id' , $user->id)->withTrashed()->first();
+                  
                     ?>
                     <td>{{ $finalRate->rate ?? __('rates.not_yet')  }}</td>
-                    <td>{{ $student_section->from  }}</td>
-                    <td>{{ $student_section->to  }}</td>
+                    <td>{{ $student_section->from ?? '' }}</td>
+                    <td>{{ $student_section->to ?? "" }}</td>
 
                     <td>
                         <a href="{{ route('student.attendance.show' , $item->id ) }}" id="add_students" value="{{ $item->id }}"

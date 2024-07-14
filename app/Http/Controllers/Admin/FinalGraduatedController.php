@@ -40,12 +40,12 @@ class FinalGraduatedController extends Controller
             $section_count =0;
             $final_rate = 0;
             $final_rate = Graduated::where('student_id', $studentid)
-                ->selectRaw('SUM(rate) as total')
+                ->selectRaw('SUM(percentage) as total')
                 ->value('total');
             $section_count = SectionStudent::where('student_id', $studentid)->onlyTrashed()->count();
             FinalGraduated::create([
                 'student_id' => $studentid,
-                'final_rate' => $final_rate/$section_count,
+                'final_rate' => ($final_rate/$section_count),
             ]);
 
         }

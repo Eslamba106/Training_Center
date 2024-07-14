@@ -105,14 +105,14 @@
                 <tr>
                     <td>{{ $item->finalGraduated->name }}</td>
                     <td>
-                        @if ($item->final_rate <= 1)
-                        {{ __("rates.poor") }}
-                    @elseif ($item->final_rate > 1 && $item->final_rate <= 2)
-                    {{ __("rates.good") }}
-                    @elseif ($item->final_rate > 2 && $item->final_rate <= 3)
-                    {{ __("rates.very") }}                    
-                    @elseif ($item->final_rate > 3 && $item->final_rate <= 4)
-                    {{ __("rates.excellent") }}
+                        @if ($item->final_rate <= 50)
+                        {{ __('rates.poor') }}
+                    @elseif ($item->final_rate < 50 && $item->final_rate >= 70)
+                        {{ __('rates.good') }}
+                    @elseif ($item->final_rate < 70 && $item->final_rate > 85)
+                        {{ __('rates.very') }}
+                    @elseif ($item->final_rate <= 100 && $item->final_rate >= 85)
+                        {{ __('rates.excellent') }}
                     @endif
                 </td>
                     <td>{{ $item->created_at->shortAbsoluteDiffForHumans() }}</td>

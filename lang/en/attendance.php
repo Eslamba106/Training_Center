@@ -21,4 +21,6 @@ return [
     "preview"           => "Preview",
     "list_section"      => "Attendance List For Section : ",
     "day"               => "Day",
+    "not_late"          => "Dont Late",
+
 ];

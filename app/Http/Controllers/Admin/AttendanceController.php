@@ -27,10 +27,8 @@ class AttendanceController extends Controller
         $section_students = SectionStudent::where('section_id', $id)
             ->where('from', '<=', $date)
             ->where('to', '>=', $date)
-            ->withTrashed()
             ->get();
 
-        // dd($section_students);
         foreach ($section_students as $sectionstudent) {
             $student_ids[] = $sectionstudent->student_id;
         }
@@ -44,7 +42,45 @@ class AttendanceController extends Controller
         }
         return view('admin.attendance.index', compact('section', 'teachers', 'students'));
     }
+    public function dayNumber(Request $request)
+    {
+        if($request->day == 1){
+            $day = Carbon::yesterday()->toDateString(); 
+            $students = Attendance::where('section_id', $request->section_id)
+            ->whereDate('attendence_date', $day)
+            ->get();
+            $section_students = SectionStudent::where('section_id', $request->section_id)
+            ->where('from', '<=', $day)
+            ->where('to', '>=', $day)
+            ->withTrashed()
+            ->get();
+        }
+        else if ($request->day == 2){
+            $day = Carbon::now()->subDays(2)->toDateString();
+            $students = Attendance::where('section_id', $request->section_id)
+            ->whereDate('attendence_date', $day)
+            ->get();
+            $section_students = SectionStudent::where('section_id', $request->section_id)
+            ->where('from', '<=', $day)
+            ->where('to', '>=', $day)
+            ->withTrashed()
+            ->get();        
+        }
+        else if ($request->day == 3)
+        {
+            $day = Carbon::now()->subDays(3)->toDateString();
+            $students = Attendance::where('section_id', $request->section_id)
+            ->whereDate('attendence_date', $day)
+            ->get();
+            $section_students = SectionStudent::where('section_id', $request->section_id)
+            ->where('from', '<=', $day)
+            ->where('to', '>=', $day)
+            ->withTrashed()
+            ->get();
 
+        }
+                
+    }
     public function show($id)
     {
         $students = Student::with('attendance')->where('section_id', $id)->get();
@@ -53,7 +89,6 @@ class AttendanceController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $moderator = Moderator::where('section_id', $request->section_id)->first();
         try {
 
@@ -68,7 +103,7 @@ class AttendanceController extends Controller
                 Attendance::create([
                     'student_id' => $studentid,
                     'section_id' => $request->section_id,
-                    'moderators_id' => $moderator->id,
+                    'moderators_id' => $moderator->id ?? 1,
                     'attendence_date' => date('Y-m-d'),
                     'attendence_status' => $attendence_status,
                     'excused' => $request->excused[$studentid] ?? null,

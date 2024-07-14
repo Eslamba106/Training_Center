@@ -33,11 +33,11 @@
                     <td>{{ $item->students->name }}</td>
                     <td>{{ $item->students->email }}</td>
                     <td>
-                        @if ($item->percentage <= 64)
+                        @if ($item->percentage <= 50)
                             {{ __('rates.poor') }}
-                        @elseif ($item->percentage < 75 && $item->percentage >= 65)
+                        @elseif ($item->percentage < 70 && $item->percentage >= 50)
                             {{ __('rates.good') }}
-                        @elseif ($item->percentage < 85 && $item->percentage >= 75)
+                        @elseif ($item->percentage < 85 && $item->percentage >= 70)
                             {{ __('rates.very') }}
                         @elseif ($item->percentage <= 100 && $item->percentage >= 85)
                             {{ __('rates.excellent') }}
